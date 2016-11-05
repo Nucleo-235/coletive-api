@@ -20,6 +20,7 @@ gem 'carrierwave-aws'
 gem 'carrierwave_backgrounder'
 gem 'high_voltage', '~> 2.2.1' # gem para paginas estaticas
 # gem 'easing', '~> 0.1.0' # para ter calculos de easing no back-end
+gem 'mail_form'
 
 # front-end engine
 gem 'slim'
@@ -35,6 +36,7 @@ gem 'jquery-easing-rails'
 gem 'font-awesome-rails'
 gem 'bourbon'
 gem 'noty-rails'
+gem 'turbolinks'
 
 # view helpers/generators
 gem 'simple_form'
@@ -50,6 +52,7 @@ gem 'omniauth-instagram'
 gem 'omniauth-twitter'
 gem 'omniauth-linkedin'
 gem 'omniauth-google-oauth2'
+gem 'omniauth-trello'
 
 # mail, analytics & logs
 gem 'madmimi'
