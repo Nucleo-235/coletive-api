@@ -27,7 +27,7 @@
 //= require_tree ../../templates
 
 //= require ./main.js
-//= require_tree ../angular/services/
-//= require_tree ../angular/directives/
-//= require_tree ../angular/filters/
-//= require_tree ../angular/controllers/
+//= require_tree ../angular/services
+//= require_tree ../angular/directives
+//= require_tree ../angular/filters
+//= require_tree ../angular/controllers
