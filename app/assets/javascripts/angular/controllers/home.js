@@ -1,5 +1,5 @@
 angular.module('MyApp')
-  .controller('IndexCtrl', function($scope, $rootScope, $state, $auth, $q) {
+  .controller('HomeCtrl', function($scope, $rootScope, $state, $auth, $q) {
     function successLogged(data) {
       console.log('logged')
     };

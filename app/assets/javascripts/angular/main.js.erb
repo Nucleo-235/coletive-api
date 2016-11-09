@@ -2,15 +2,15 @@
 angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'templates', 'toastr', 'ui.router', 'ng-token-auth', 'ui.bootstrap', 'ngFileUpload', 'bootstrapLightbox', 'rails', 'ui.mask', 'ui.bootstrap.showErrors'])
   .constant('config', {
       API_URL: "<%= apiFinalURL %>",
-      ROOT_ROUTE: '/index',
-      ROOT_STATE: 'index'
+      ROOT_ROUTE: '/home',
+      ROOT_STATE: 'home'
   })
   .config(function($stateProvider, $urlRouterProvider, $authProvider, config) {
     $stateProvider
-      .state('index', {
-        url: '/index',
-        templateUrl: 'index.html',
-        controller: 'IndexCtrl'
+      .state('home', {
+        url: '/home',
+        templateUrl: 'home.html',
+        controller: 'HomeCtrl'
       })
       .state('logout', {
         url: '/logout',
