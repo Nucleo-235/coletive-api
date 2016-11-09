@@ -7,3 +7,6 @@ html
     = csrf_meta_tags
   body
     = yield
+
+    = javascript_include_tag 'application_bottom', 'data-turbolinks-track' => true
+    = yield :after_all

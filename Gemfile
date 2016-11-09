@@ -2,13 +2,18 @@ source 'https://rubygems.org'
 
 ruby ENV['CUSTOM_RUBY_VERSION'] || '2.2.4'
 gem 'rails', '4.2.5'
+gem 'rails-api'
+gem 'rack-cors'
+gem 'sprockets', '3.6.3'
+gem "responders"
 gem 'pg'
 gem 'actionmailer'
-gem 'active_model_serializers'
+gem 'active_model_serializers', "0.10.0.rc4"
 gem 'http_accept_language'
 gem 'globalize', '~> 5.0.0'
 
 # workers
+gem 'sinatra'
 gem 'redis'
 gem 'redis-namespace'
 gem 'sidekiq', '~> 3.2.6'
@@ -37,6 +42,8 @@ gem 'font-awesome-rails'
 gem 'bourbon'
 gem 'noty-rails'
 gem 'turbolinks'
+gem 'bower-rails', '~> 0.10.0'
+gem 'angular-rails-templates'
 
 # view helpers/generators
 gem 'simple_form'
@@ -45,7 +52,8 @@ gem 'cocoon' #nested forms
 gem 'best_in_place', '~> 3.0.1'
 
 # users & auth
-gem 'devise'
+gem 'devise', '3.5.3'
+gem 'devise_token_auth', '0.1.36'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-instagram'

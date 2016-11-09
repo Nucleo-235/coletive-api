@@ -3,7 +3,8 @@
 # Table name: users
 #
 #  id                     :integer          not null, primary key
-#  email                  :string           default(""), not null
+#  provider               :string           default("email"), not null
+#  uid                    :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  reset_password_token   :string
 #  reset_password_sent_at :datetime
@@ -11,53 +12,61 @@
 #  sign_in_count          :integer          default(0), not null
 #  current_sign_in_at     :datetime
 #  last_sign_in_at        :datetime
-#  current_sign_in_ip     :inet
-#  last_sign_in_ip        :inet
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
+#  current_sign_in_ip     :string
+#  last_sign_in_ip        :string
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  unconfirmed_email      :string
+#  name                   :string
+#  email                  :string
+#  nickname               :string
+#  social_image           :string
+#  image                  :string
+#  phone                  :string
 #  type                   :string
+#  tokens                 :json
+#  created_at             :datetime
+#  updated_at             :datetime
 #
 
 require 'file_size_validator'
 
 class User < ActiveRecord::Base
-  
+  include DeviseTokenAuth::Concerns::User
+  # Include default devise modules.
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, 
-         :omniauthable, omniauth_providers: [:facebook]
+          :recoverable, :rememberable, :trackable,
+          :confirmable, :omniauthable
+  
+  has_many :identities, dependent: :destroy
 
-  def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
-    user = User.where(:provider => auth.provider, :uid => auth.uid).first
-    # puts auth
-
-    if user
-      user.update(remote_image: auth.info.image)
-      user.update(gender: auth.info.gender || auth.extra.raw_info.gender) unless user.gender
-      return user
+  def masked_email
+    if email && email.length > 5
+      email[0..4] + ("*" * (email.length - 5))
     else
-      registered_user = User.where(:email => auth.info.email).first
-      if registered_user
-        registered_user.update( first_name:(auth.info.first_name || get_first_name(auth.info.name)),
-                  last_name: (auth.info.last_name || get_last_name(auth.info.name)),
-                  provider:auth.provider,
-                  uid:auth.uid,
-                  remote_image:auth.info.image,
-                  gender:auth.info.gender || auth.extra.raw_info.gender
-                )
-        return registered_user
-      else
-        user = User.create( first_name:(auth.info.first_name || get_first_name(auth.info.name)),
-                          last_name:(auth.info.last_name || get_last_name(auth.info.name)),
-                          provider:auth.provider,
-                          uid:auth.uid,
-                          email:auth.info.email,
-                          remote_image:auth.info.image,
-                          gender:auth.info.gender || auth.extra.raw_info.gender,
-                          password:Devise.friendly_token[0,20],
-                          type: nil
-                        )
-      end
+      nil
     end
-    return user
+  end
+
+  def first_name
+    if name && name.length > 1 # pelo menos 2 letras
+      names_separator_index = name.index(' ')
+      if names_separator_index > -1
+        if names_separator_index > 1 # pelo menos 2 letras
+          name[0..(names_separator_index-1)]
+        else
+          nil
+        end
+      else
+        name
+      end
+    else
+      nil
+    end
+  end
+
+  def public_name
+    nickname || first_name || masked_email
   end
 end

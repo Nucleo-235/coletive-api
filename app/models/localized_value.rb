@@ -5,7 +5,7 @@
 #  id                :integer          not null, primary key
 #  localized_page_id :integer
 #  key               :string
-#  value             :string
+#  value             :text
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #

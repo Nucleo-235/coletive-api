@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
-
+  respond_to :html
+  
   skip_before_action :authenticate_user!
   skip_before_action :set_locale, only: [:home]
   skip_before_action :persist_locale, only: [:home]

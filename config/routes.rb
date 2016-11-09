@@ -1,8 +1,24 @@
 Rails.application.routes.draw do
-  devise_for :users
-
   resources :localized_values, only: [ :update ]
   resources :general_contacts, only: [:create], :path => "contato"
+
+  mount_devise_token_auth_for 'User', at: 'api/v1/auth', controllers: {
+    registrations:  'overrides/registrations',
+    omniauth_callbacks:  'overrides/omniauth_callbacks'
+  }
+  
+  scope :api do
+    scope :v1 do
+      get 'me', to: 'users#me'
+
+      resources :users do 
+        get 'update_image', on: :collection
+      end
+    end
+  end
+
+  require 'sidekiq/web'
+  mount Sidekiq::Web, at: '/sidekiq-dashboard'
   
   # resources :services, only: [ :create, :update, :destroy ]
   # resources :work_contacts, only: [:create], :path => "trabalhe_conosco"
