@@ -30,6 +30,7 @@
 #  updated_at             :datetime
 #
 
+require 'trello'
 require 'file_size_validator'
 
 class User < ActiveRecord::Base
@@ -68,5 +69,44 @@ class User < ActiveRecord::Base
 
   def public_name
     nickname || first_name || masked_email
+  end
+
+  def trello_client
+    if !defined? @trello_client
+      @trello_identity = identities.where(provider: 'trello').first
+      @trello_client = Trello::Client.new(
+        :consumer_key => ENV['TRELLO_KEY'],
+        :consumer_secret => ENV['TRELLO_SECRET'],
+        :oauth_token => @trello_identity.accesstoken,
+        :oauth_token_secret => @trello_identity.secret
+      )
+    end
+    @trello_client
+  end
+
+  def trello_member
+    if !defined? @trello_member
+      @trello_member = trello_client.find(:member, :me)
+    end
+    @trello_member
+  end
+
+  def trello_boards(params = {})
+    return Trello::Board.from_response trello_client.get("/members/#{trello_member.username}/boards", params)
+  end
+
+  def trello_open_boards
+    if !defined? @trello_open_boards
+      @trello_open_boards = trello_boards({ filter: 'public'}).select { |item| !item.closed }
+    end
+    @trello_open_boards
+  end
+
+  def trello_lists(board_id, params = {})
+    return Trello::List.from_response trello_client.get("/boards/#{board_id}/lists", params)
+  end
+
+  def trello_open_lists(board_id)
+    return trello_lists(board_id, {filter: 'open'})
   end
 end

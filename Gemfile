@@ -62,6 +62,7 @@ gem 'omniauth-twitter'
 gem 'omniauth-linkedin'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-trello'
+gem 'ruby-trello'
 
 # mail, analytics & logs
 gem 'madmimi'

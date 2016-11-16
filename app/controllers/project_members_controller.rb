@@ -1,4 +1,5 @@
 class ProjectMembersController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:index]
   before_action :set_project_member, only: [:show, :update, :destroy]
 
   # GET /project_members

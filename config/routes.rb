@@ -13,7 +13,10 @@ Rails.application.routes.draw do
     scope :v1 do
       get 'me', to: 'users#me'
 
-      resources :projects, except: [:new, :edit]
+      resources :projects, except: [:new, :edit] do
+        get :trello_boards, on: :collection
+        get :trello_lists, on: :collection
+      end
 
       resources :users do 
         get 'update_image', on: :collection

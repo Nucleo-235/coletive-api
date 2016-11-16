@@ -1,0 +1,30 @@
+#new-project
+  .step-1 ng-show="step == 1"
+    h2 Faça seu login
+    button.button.button-facebook ng-if="!isAuthenticated()" ng-click="loginWithTrello()" entrar com trello
+    .logged ng-if="isAuthenticated()"
+      span Ja esta logado
+  .step-2 ng-show="step == 2"
+    h2 Selecione o board
+    p Somente serão exibidos boards publicos
+    form ng-submit="projectSelected()"
+      .form-group show-errors=""
+        label.control-label
+          i.ion-board
+          | Board
+        select.form-control name="board" ng-change="boardChanged()" ng-model="formData.selectedBoard" ng-options=("b as b.name for b in formData.boards") required="true" 
+          option ng-bind="getOptionPlaceholder(formData.boards, formData.loadingBoards, ' - Selecione um Board - ', 'Carregando Boards ...')"
+      input type="submit" value="Próximo"
+  .step-3 ng-show="step == 3"
+    h2 Selecione o TODO
+    p selecione qual lista sua é referente ao TODO
+    form ng-submit="todoSelected()"
+      .form-group show-errors=""
+        label.control-label
+          i.ion-list
+          | Lista
+        select.form-control name="list" ng-change="listChanged()" ng-model="formData.selectedList" ng-options=("b as b.name for b in formData.lists") required="" 
+          option ng-bind="getOptionPlaceholder(formData.lists, formData.loadingLists, ' - Selecione uma Lista - ', 'Carregando Listas ...')"
+      input type="submit" value="Próximo"
+  .step-4 ng-show="step == 4"
+    p Projeto cadastrado com sucesso

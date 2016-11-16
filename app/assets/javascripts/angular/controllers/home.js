@@ -1,5 +1,5 @@
 angular.module('MyApp')
-  .controller('HomeCtrl', function($scope, $rootScope, $state, $auth, $q, Project) {
+  .controller('HomeCtrl', function($scope, $rootScope, $state, $auth, $q, Project, $uibModal) {
     function successLogged(data) {
       console.log('logged')
     };
@@ -26,9 +26,28 @@ angular.module('MyApp')
       });
     }
 
-    Project.query().then(function(data) {
-      $scope.projects = data;
-    })
+    function reloadProjects() {
+      Project.query().then(function(data) {
+        $scope.projects = data;
+      });
+    }
+    reloadProjects();
+
+    $scope.newProject = function() {
+      var modalInstance = $uibModal.open({
+        animation: true,
+        size: 'lg',
+        templateUrl: 'projects/new.html',
+        controller: 'NewProjectCtrl'
+      });
+
+      modalInstance.result.then(function (newGroupRequest) {
+        alert('projeto criado com sucesso!');
+        reloadProjects();
+      }, function () {
+        reloadProjects();
+      });
+    }
 
     // var isMob = window.cordova !== undefined;
     // if (isMob)

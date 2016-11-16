@@ -1,4 +1,5 @@
 class ProjectsController < ApiController
+  skip_before_action :authenticate_user!, only: [:index]
   before_action :set_project, only: [:show, :update, :destroy]
 
   # GET /projects
@@ -7,6 +8,19 @@ class ProjectsController < ApiController
     @projects = Project.all
 
     render json: @projects
+  end
+
+  def trello_boards
+    render json: current_user.trello_open_boards
+  end
+
+  def trello_lists
+    board = current_user.trello_open_boards.find {|b| b.id == params[:board_id] }
+    if board
+      render json: current_user.trello_open_lists(board.id)
+    else
+      render json: []
+    end
   end
 
   # GET /projects/1
@@ -18,10 +32,11 @@ class ProjectsController < ApiController
   # POST /projects
   # POST /projects.json
   def create
-    @project = Project.new(project_params)
+    @project = TrelloProject.new(project_params)
+    # @project = Project.new(project_params) # não serao permitidos outros tipos de projeto por enquanto
 
     if @project.save
-      render json: @project, status: :created, location: @project
+      render json: @project, status: :created, location: project_url(@project)
     else
       render json: @project.errors, status: :unprocessable_entity
     end
@@ -54,6 +69,7 @@ class ProjectsController < ApiController
     end
 
     def project_params
-      params.require(:project).permit(:name, :slug, :user_id, :description, :documentation_url, :code_url, :assets_url, :trello_board_id)
+      params.require(:project).permit(:name, :slug, :user_id, :description, :documentation_url, :code_url, :assets_url, 
+        info_attributes: [:id, :board_id, :todo_list_id])
     end
 end
