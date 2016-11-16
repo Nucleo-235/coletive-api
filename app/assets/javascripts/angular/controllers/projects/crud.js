@@ -9,7 +9,7 @@ angular.module('MyApp').controller('NewProjectCtrl',
     $scope.loginWithTrello = function() {
       $auth.authenticate('trello')
         .then(function() {
-
+          $scope.loggedSucessfully();
         })
         .catch(function(resp) {
           console.log(resp);
