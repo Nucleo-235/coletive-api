@@ -1,5 +1,5 @@
 angular.module('MyApp')
-  .controller('HomeCtrl', function($scope, $rootScope, $state, $auth, $q) {
+  .controller('HomeCtrl', function($scope, $rootScope, $state, $auth, $q, Project) {
     function successLogged(data) {
       console.log('logged')
     };
@@ -25,6 +25,10 @@ angular.module('MyApp')
         return result;
       });
     }
+
+    Project.query().then(function(data) {
+      $scope.projects = data;
+    })
 
     // var isMob = window.cordova !== undefined;
     // if (isMob)

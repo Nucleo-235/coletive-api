@@ -1,2 +1,15 @@
 button.button.button-facebook ng-if="!isAuthenticated()" ng-click="loginWithTrello()" entrar com trello
 .logged ng-if="isAuthenticated()" Ja esta logado
+
+.projects
+  ul
+    li ng-repeat="project in projects"
+      span ng-bind="project.name"
+      | - 
+      span ng-bind="project.type"
+      | - 
+      span ng-if="project.info" ng-bind="project.info.board_id"
+      | -
+      span ng-if="project.tasks" ng-bind="project.tasks.length"
+      | -
+      span ng-if="project.members" ng-bind="project.members.length + 1"

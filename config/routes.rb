@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :project_members, except: [:new, :edit]
+  resources :tasks, except: [:new, :edit]
   resources :localized_values, only: [ :update ]
   resources :general_contacts, only: [:create], :path => "contato"
 
@@ -10,6 +12,8 @@ Rails.application.routes.draw do
   scope :api do
     scope :v1 do
       get 'me', to: 'users#me'
+
+      resources :projects, except: [:new, :edit]
 
       resources :users do 
         get 'update_image', on: :collection
