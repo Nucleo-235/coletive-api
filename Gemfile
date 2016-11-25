@@ -42,7 +42,7 @@ gem 'jquery-easing-rails'
 gem 'font-awesome-rails'
 gem 'bourbon'
 gem 'noty-rails'
-gem 'turbolinks'
+# gem 'turbolinks'
 gem 'bower-rails', '~> 0.10.0'
 gem 'angular-rails-templates'
 

@@ -20,4 +20,6 @@ class Task < ActiveRecord::Base
   belongs_to :project
 
   validates_presence_of :project, :name
+
+  has_many :task_labels
 end

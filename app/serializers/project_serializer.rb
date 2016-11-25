@@ -13,10 +13,11 @@
 #  assets_url        :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  public            :boolean          default(TRUE)
 #
 
 class ProjectSerializer < ActiveModel::Serializer
-  attributes :id, :type, :name, :slug, :description, :documentation_url, :code_url, :assets_url
+  attributes :id, :type, :name, :slug, :description, :documentation_url, :code_url, :assets_url, :tasks_count
   has_one :user
   has_one :info
   
@@ -29,6 +30,10 @@ class ProjectSerializer < ActiveModel::Serializer
 
   def tasks
     object.tasks.limit(10)
+  end
+
+  def tasks_count
+    object.tasks.count
   end
 
   def members

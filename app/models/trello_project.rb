@@ -13,6 +13,7 @@
 #  assets_url        :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  public            :boolean          default(TRUE)
 #
 
 class TrelloProject < Project
@@ -21,4 +22,12 @@ class TrelloProject < Project
   
   validates_associated :info
   validates_presence_of :info
+
+  def sync
+    trello_board = Trello::Board.from_response user.trello_client.get("/boards/#{info.board_id}")
+    self.public = !trello_board.closed && trello_board.prefs["permissionLevel"] && trello_board.prefs["permissionLevel"] == "public"
+    self.save
+    
+    # sync tasks
+  end
 end

@@ -33,6 +33,7 @@ class ProjectsController < ApiController
   # POST /projects.json
   def create
     @project = TrelloProject.new(project_params)
+    @project.user = current_user
     # @project = Project.new(project_params) # não serao permitidos outros tipos de projeto por enquanto
 
     if @project.save

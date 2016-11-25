@@ -13,6 +13,7 @@
 #  assets_url        :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  public            :boolean          default(TRUE)
 #
 
 class TrelloProjectSerializer < Project

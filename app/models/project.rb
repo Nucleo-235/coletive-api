@@ -13,7 +13,10 @@
 #  assets_url        :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  public            :boolean          default(TRUE)
 #
+
+require 'trello'
 
 class Project < ActiveRecord::Base
   extend FriendlyId
@@ -24,4 +27,8 @@ class Project < ActiveRecord::Base
 
   has_many :tasks
   has_many :members, class_name: :ProjectMember, foreign_key: 'project_id'
+
+  def sync
+    
+  end
 end
