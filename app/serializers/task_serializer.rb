@@ -14,8 +14,15 @@
 #  trello_card_id :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  trello_list_id :string
 #
 
 class TaskSerializer < ActiveModel::Serializer
-  attributes :id, :type, :name, :description, :due_date, :completed, :assigned, :trello_card_id
+  attributes :id, :type, :name, :description, :due_date, :completed, :assigned
+
+  has_many :labels
+
+  def labels
+    object.task_labels.map { |task_label| task_label.label.name  }
+  end
 end

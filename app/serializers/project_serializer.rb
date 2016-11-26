@@ -14,26 +14,27 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  public            :boolean          default(TRUE)
+#  last_synced_at    :datetime
 #
 
 class ProjectSerializer < ActiveModel::Serializer
   attributes :id, :type, :name, :slug, :description, :documentation_url, :code_url, :assets_url, :tasks_count
   has_one :user
-  has_one :info
+  # has_one :info
   
-  has_many :tasks
+  has_many :valid_tasks, key: "tasks", serializer: TaskSerializer
   has_many :members
 
   def info
     object.info if object.respond_to? :info
   end
 
-  def tasks
-    object.tasks.limit(10)
+  def valid_tasks
+    object.valid_tasks.limit(10)
   end
 
   def tasks_count
-    object.tasks.count
+    object.valid_tasks.count
   end
 
   def members

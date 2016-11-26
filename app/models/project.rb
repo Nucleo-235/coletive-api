@@ -14,6 +14,7 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  public            :boolean          default(TRUE)
+#  last_synced_at    :datetime
 #
 
 require 'trello'
@@ -27,6 +28,15 @@ class Project < ActiveRecord::Base
 
   has_many :tasks
   has_many :members, class_name: :ProjectMember, foreign_key: 'project_id'
+
+  scope :valid , -> do
+    where(public: true)
+  end
+
+  def valid_tasks
+    # overriden in trello projects
+    self.tasks
+  end
 
   def sync
     

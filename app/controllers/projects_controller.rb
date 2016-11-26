@@ -5,9 +5,9 @@ class ProjectsController < ApiController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects = Project.valid
 
-    render json: @projects
+    render json: @projects, include: '**'
   end
 
   def trello_boards
