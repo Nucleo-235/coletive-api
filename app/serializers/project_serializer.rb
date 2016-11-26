@@ -15,6 +15,7 @@
 #  updated_at        :datetime         not null
 #  public            :boolean          default(TRUE)
 #  last_synced_at    :datetime
+#  closed            :boolean          default(FALSE)
 #
 
 class ProjectSerializer < ActiveModel::Serializer

@@ -15,6 +15,7 @@
 #  updated_at        :datetime         not null
 #  public            :boolean          default(TRUE)
 #  last_synced_at    :datetime
+#  closed            :boolean          default(FALSE)
 #
 
 class TrelloProject < Project
@@ -31,7 +32,8 @@ class TrelloProject < Project
 
   def sync
     trello_board = Trello::Board.from_response user.trello_client.get("/boards/#{info.board_id}")
-    self.public = !trello_board.closed && trello_board.prefs["permissionLevel"] && trello_board.prefs["permissionLevel"] == "public"
+    self.closed = trello_board.closed
+    self.public = trello_board.prefs["permissionLevel"] && trello_board.prefs["permissionLevel"] == "public"
     self.save
     
     # sync tasks

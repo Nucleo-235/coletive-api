@@ -15,6 +15,7 @@
 #  updated_at        :datetime         not null
 #  public            :boolean          default(TRUE)
 #  last_synced_at    :datetime
+#  closed            :boolean          default(FALSE)
 #
 
 require 'trello'
@@ -30,7 +31,7 @@ class Project < ActiveRecord::Base
   has_many :members, class_name: :ProjectMember, foreign_key: 'project_id'
 
   scope :valid , -> do
-    where(public: true)
+    where(public: true, closed: false)
   end
 
   def valid_tasks
