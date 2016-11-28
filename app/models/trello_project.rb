@@ -25,6 +25,8 @@ class TrelloProject < Project
   validates_associated :info
   validates_presence_of :info
 
+  after_create :check_for_sync
+
   def valid_tasks
     # overriden in trello projects
     self.tasks.where(trello_list_id: self.info.todo_list_id)
@@ -75,4 +77,14 @@ class TrelloProject < Project
     self.last_synced_at = Time.new
     self.save
   end
+
+  def self.sync_project(project_id)
+    TrelloProject.find(project_id).sync
+  end
+
+  private
+
+    def check_for_sync
+      TrelloProject.delay.sync_project(self.id)
+    end
 end
