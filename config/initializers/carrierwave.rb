@@ -1,13 +1,13 @@
 CarrierWave.configure do |config|
   if Rails.env.production?
     config.storage = :aws
-    config.aws_bucket =  "projetos.livres.live"
+    config.aws_bucket =  "coletive.live"
   elsif (Rails.env.development? && Rails.application.secrets.aws_access_key_id.present?)
     config.storage = :aws
-    config.aws_bucket =  "projetos.livres.dev"
+    config.aws_bucket =  "coletive.dev"
   else
     config.storage = :file
-    config.aws_bucket =  "projetos.livres"
+    config.aws_bucket =  "coletive"
   end
   config.aws_acl    =  :public_read
 
