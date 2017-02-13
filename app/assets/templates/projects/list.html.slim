@@ -4,7 +4,7 @@
     li ng-repeat="project in projects"
       h3 ng-bind="project.name"
       .share
-        div ng-include="'shared/share.html'" ng-init="url=project.url"
+        div ng-include="'shared/_share.html'" ng-init="url=project.url"
       .actions
         a.expand href="" ng-click="openProject(project)" Abrir
 
@@ -22,6 +22,6 @@
           .dates
             span.due-date ng-bind="task.due_date"
           .share
-            div ng-include="'shared/share.html'" ng-init="url=task.url"
+            div ng-include="'shared/_share.html'" ng-init="url=task.url"
           .actions
             a.participate href="" ng-click="participate(task)" Participar

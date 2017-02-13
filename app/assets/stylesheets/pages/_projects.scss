@@ -62,6 +62,7 @@
     & > li {
       margin-top: $susy-gutter-width;
       padding: $susy-gutter-width;
+      width: 100%;
 
       background-color: darken($main-bg, 10%);
       color: lighten($main-text-color, 10%);
@@ -81,6 +82,11 @@
 
       padding: 5px;
       display: inline-block;
+    }
+  }
+  .share {
+    ul {
+      display: none;
     }
   }
 }
