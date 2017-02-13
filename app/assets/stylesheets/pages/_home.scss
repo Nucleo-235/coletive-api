@@ -1,0 +1,11 @@
+#home {
+  .how-it-works {
+    .slide {
+      @include row();
+
+      & > h2, p {
+        @include column((small: 12, desktop: 12, wide: 12));
+      }
+    }
+  }
+}

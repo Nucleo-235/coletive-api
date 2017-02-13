@@ -1,2 +1,14 @@
-a ng-click="newProject()" href="" Novo Projeto
-div ng-include="'projects/list.html'"
+header
+  h1 Coletive
+  nav
+    / ul
+    /   li
+#home
+  section#how-it-works
+    .slide.slide-1
+      h2 Titulo Blablabla
+      p Descrição blabla
+  section#new-project
+    a ng-click="newProject()" href="" Adicionar um Projeto
+  section#projects
+    div ng-include="'projects/list.html'"

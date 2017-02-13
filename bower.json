@@ -28,6 +28,13 @@
     "bootstrap": "^3.3.6",
     "jquery-ui": "^1.12.0",
     "angular-ui-mask": "^1.8.7",
-    "angular-i18n": "^1.5.8"
+    "angular-i18n": "^1.5.8",
+    "susy": "^2.2.12",
+    "sass-mq": "^3.3.2",
+    "angular-translate": "^2.14.0",
+    "angular-translate-loader-static-files": "^2.14.0",
+    "angular-translate-storage-local": "^2.14.0",
+    "angular-translate-handler-log": "^2.14.0",
+    "angular-dynamic-locale": "^0.1.32"
   }
 }

@@ -17,3 +17,22 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "font-awesome";
+
+@import "susy/sass/susy";
+@import 'sass-mq/mq';
+
+@import "variables";
+@import "grid";
+@import "pages/home";
+@import "pages/projects";
+
+
+body {
+  background-color: $main-bg;
+}
+.content {
+  @include container;
+  padding-left: $susy-gutter-width;
+  padding-right: $susy-gutter-width;
+  background-color: $main-bg;
+}

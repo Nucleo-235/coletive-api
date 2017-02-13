@@ -1,10 +1,27 @@
-.projects
+.project-list
   h2 Projetos
-  ul
+  ul.projects
     li ng-repeat="project in projects"
-      span ng-bind="project.name"
-      ul
+      h3 ng-bind="project.name"
+      .share
+        div ng-include="'shared/share.html'" ng-init="url=project.url"
+      .actions
+        a.expand href="" ng-click="openProject(project)" Abrir
+
+      ul.tasks
         li ng-repeat="task in project.tasks" 
-          span ng-bind="task.name"
-          ul ng-repeat="label in task.labels" 
+          img ng-if="task.main_image_url" ng-src="task.main_image_url"
+          ul.labels ng-repeat="label in task.labels" 
             li ng-bind="label"
+          strong ng-bind="task.name"
+          p ng-bind="task.description" ng-if="task.description && task.description.length > 0"
+          .checklist ng-if="task.checklist_total"
+            span.done ng-bind="task.checklist_done"
+            span /
+            span.total ng-bind="task.checklist_total"
+          .dates
+            span.due-date ng-bind="task.due_date"
+          .share
+            div ng-include="'shared/share.html'" ng-init="url=task.url"
+          .actions
+            a.participate href="" ng-click="participate(task)" Participar

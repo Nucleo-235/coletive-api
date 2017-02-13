@@ -1,0 +1,86 @@
+.project-list {
+  padding: $susy-gutter-width 0px;
+
+  p {
+    word-break: break-all;
+  }
+
+  h2 {
+    display: none;
+  }
+  ul.projects {
+    list-style-type: none;
+    padding-left: 0px;
+
+    @include row();
+
+    & > li {
+      & > * {
+        background-color: darken($main-bg, 5%);
+        background-origin: content-box;
+      }
+
+      color: lighten($main-text-color, 5%);
+      @include column((small: 12, desktop: 6, wide: 4));
+      padding-bottom: $susy-gutter-width;
+
+      h3 {
+        @include column((small: 12));
+        background-color: darken($main-bg, 20%);
+        margin-top: 0px;
+      }
+    }
+  }
+
+  ul.tasks {
+    list-style-type: none;
+    padding: $susy-gutter-width;
+    // @include row();
+
+    -webkit-column-count: 1;
+    -webkit-column-gap: 0px;
+    -webkit-column-fill: auto;
+    -moz-column-count: 1;
+    -moz-column-gap: 0px;
+    -moz-column-fill: auto;
+    column-count: 1;
+    column-gap: 0px;
+    column-fill: auto;
+
+    @include mq($from: tablet) {
+      -webkit-column-count: 2;
+      -webkit-column-gap: $susy-gutter-width;
+      -webkit-column-fill: auto;
+      -moz-column-count: 2;
+      -moz-column-gap: $susy-gutter-width;
+      -moz-column-fill: auto;
+      column-count: 2;
+      column-gap: $susy-gutter-width;
+      column-fill: auto;
+    }
+
+    & > li {
+      margin-top: $susy-gutter-width;
+      padding: $susy-gutter-width;
+
+      background-color: darken($main-bg, 10%);
+      color: lighten($main-text-color, 10%);
+      // @include column((small: 12, desktop: 6, wide: 6));
+      display: inline-block;
+      column-break-inside: avoid;
+    }
+  }
+
+  ul.labels {
+    list-style-type: none;
+    padding-left: 0px;
+
+    & > li {
+      background-color: darken($main-bg, 30%);
+      color: lighten($main-text-color, 30%);
+
+      padding: 5px;
+      display: inline-block;
+    }
+  }
+}
