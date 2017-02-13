@@ -1,0 +1,18 @@
+.session
+  .not-logged ng-if="!isAuthenticated()"
+    .login
+      h2 Login com Trello
+      p.above Se você já tem uma conta no Trello basta clicar abaixo. Não precisa de cadastro
+      button.button.button-login.btn-success ng-click="loginWithTrello()" conectar com trello
+      p.below Se você já tem uma conta no Trello basta clicar acima. Não precisa de cadastro
+    .signup
+      h2 Criar uma conta
+      p.above
+        | Após criar a sua conta no side do Trello, basta voltar aqui e clocar no botão
+        strong conectar com trello
+      button.button.button-trello.btn-standard  ng-click="signupWithTrello()" criar conta no trello
+      p.below
+        | Após criar a sua conta no side do Trello, basta voltar aqui e clocar no botão
+        strong conectar com trello
+  .logged ng-if="isAuthenticated()"
+    span Carregando dados de projetos

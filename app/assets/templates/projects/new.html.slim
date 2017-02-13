@@ -1,9 +1,5 @@
-#new-project
-  .step-1 ng-show="step == 1"
-    h2 Faça seu login
-    button.button.button-facebook ng-if="!isAuthenticated()" ng-click="loginWithTrello()" entrar com trello
-    .logged ng-if="isAuthenticated()"
-      span Ja esta logado
+section#new-project
+  .step-1 ng-show="step == 1" ng-include="'sessions/_login.html'"
   .step-2 ng-show="step == 2"
     h2 Selecione o board
     p Somente serão exibidos boards publicos
@@ -28,3 +24,4 @@
       input type="submit" value="Próximo"
   .step-4 ng-show="step == 4"
     p Projeto cadastrado com sucesso
+    a ui-sref="home" Continuar

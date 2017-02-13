@@ -1,5 +1,5 @@
 angular.module('MyApp').controller('NewProjectCtrl', 
-  function($scope, $uibModalInstance, $auth, Project, toastr) {
+  ['$scope', '$rootScope', '$auth', 'Project', 'toastr', function($scope, $rootScope, $auth, Project, toastr) {
     $scope.isAuthenticated = function() {
       return $auth.userIsAuthenticated();
     };
@@ -65,4 +65,16 @@ angular.module('MyApp').controller('NewProjectCtrl',
     if ($scope.step > 1) {
       $scope.loggedSucessfully();
     }
-  });
+
+    $rootScope.$on('auth:login-success', function(ev, user) {
+      if ($scope.step == 1) {
+        $scope.loggedSucessfully();
+      }
+    });
+
+    $rootScope.$on('auth:validation-success', function(ev, user) {
+      if ($scope.step == 1) {
+        $scope.loggedSucessfully();
+      }
+    });
+  }]);

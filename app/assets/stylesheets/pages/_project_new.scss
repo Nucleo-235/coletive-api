@@ -1,0 +1,42 @@
+#new-project {
+  margin-top: 10px;
+  @include mq($from: tablet) {
+    margin-top: 20px;
+  }
+  @include row;
+  & > * {
+    @include cleanColumn((small: 8));
+    margin-left: auto;
+    margin-right: auto;
+
+  }
+  .step-1 {
+    .session {
+      .not-logged {
+        @include row;
+        & > * {
+          @include column((small: 12, tablet: 6));
+          .above {
+            display: none;
+          }
+          @include mq($from: tablet) {
+            .above {
+              display: block;
+            }
+            .below {
+              display: none;
+            }
+          }
+          @include mq($until: tablet) {
+            text-align: center;
+          }
+        }
+        .logged {
+          @include mq($from: tablet) {
+            border-right: solid 1px #000;
+          }
+        }
+      }
+    }
+  }
+}

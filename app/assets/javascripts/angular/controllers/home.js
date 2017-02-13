@@ -34,19 +34,7 @@ angular.module('MyApp')
     reloadProjects();
 
     $scope.newProject = function() {
-      var modalInstance = $uibModal.open({
-        animation: true,
-        size: 'lg',
-        templateUrl: 'projects/new.html',
-        controller: 'NewProjectCtrl'
-      });
-
-      modalInstance.result.then(function (newGroupRequest) {
-        alert('projeto criado com sucesso!');
-        reloadProjects();
-      }, function () {
-        reloadProjects();
-      });
+      $state.go('new_project');
     }
 
     // var isMob = window.cordova !== undefined;

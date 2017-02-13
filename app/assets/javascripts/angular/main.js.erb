@@ -17,6 +17,11 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'templates', '
         template: null,
         controller: 'LogoutCtrl'
       })
+      .state('new_project', {
+        url: '/new_project',
+        templateUrl: 'projects/new.html',
+        controller: 'NewProjectCtrl'
+      })
       .state('logged', {
         url: '/app',
         abstract: true,
