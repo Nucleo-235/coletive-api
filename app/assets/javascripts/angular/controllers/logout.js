@@ -4,5 +4,7 @@ angular.module('MyApp')
       .then(function() {
         toastr.info('Desconectado do sistema com sucesso.');
         $location.path('/login');
+      }, function() {
+        $location.path('/login');
       });
   });

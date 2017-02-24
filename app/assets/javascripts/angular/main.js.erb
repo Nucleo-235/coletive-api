@@ -18,8 +18,12 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'templates', '
       })
       .state('logout', {
         url: '/logout',
-        template: null,
-        controller: 'LogoutCtrl'
+        views: {
+          'view-content': {
+            template: null,
+            controller: 'LogoutCtrl'
+          }
+        }
       })
       .state('new_project', {
         url: '/new_project',
@@ -119,6 +123,7 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'templates', '
 
     $authProvider.configure({
       apiUrl: config.API_URL,
+      signOutUrl: '/auth/sign_out.json',
       omniauthWindowType: 'newWindow',
       authProviderPaths: {
         trello: '/auth/trello'

@@ -3,9 +3,9 @@ div ng-app="MyApp"
   header
     h1 Coletive.Co
     nav
-      a.main-action ng-hide="hasBack || hasCustomNav" href="/"
+      a.main-action ng-hide="hasBack || hasCustomNav" href="#"
         i.fa.fa-close
-      a.main-action ng-show="hasBack" href=""  ng-click="back()"
+      a.main-action ng-show="hasBack" href="#"  ng-click="back()"
       a.main-action ng-show="hasCustomNav" href=""  ng-click="goToCustomNav()"
 
   #main-container
