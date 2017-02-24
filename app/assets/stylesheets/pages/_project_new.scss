@@ -1,40 +1,64 @@
 #new-project {
   margin-top: 10px;
-  @include mq($from: tablet) {
-    margin-top: 20px;
-  }
   @include row;
+
   & > * {
     @include cleanColumn((small: 8));
     margin-left: auto;
     margin-right: auto;
 
   }
+
   .step-1 {
     .session {
       .not-logged {
         @include row;
         & > * {
+          text-align: center;
+          margin: 0px;
+          padding: 2.3em 0px;
+
           @include column((small: 12, tablet: 6));
+
           .above {
             display: none;
           }
-          @include mq($from: tablet) {
-            .above {
-              display: block;
-            }
-            .below {
-              display: none;
-            }
+
+          & > *:first-child {
+            margin-top: 0px;
+            padding-top: 0px;
           }
-          @include mq($until: tablet) {
-            text-align: center;
+          & > *:last-child {
+            margin-bottom: 0px;
+            padding-bottom: 0px;
+          }
+        }
+
+        .login {
+          border-bottom: 1px $splitter-color solid;
+        }
+
+        h2 {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @include mq($from: tablet) {
+    margin-top: 20px;
+    .step-1 {
+      .session {
+        .not-logged {
+          .above {
+            display: block;
+          }
+          .below {
+            display: none;
           }
         }
         .logged {
-          @include mq($from: tablet) {
-            border-right: solid 1px #000;
-          }
+          border-right: solid 1px #000;
         }
       }
     }

@@ -1,0 +1,33 @@
+header {
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  background-color: $header-bg;
+  border-bottom: 1px solid $splitter-color;
+
+  h1 {
+    font-size:1.5em;
+    font-weight: 300;
+  }
+
+  nav {
+    position: absolute;
+    top: 0px;
+    left: 20px;
+    bottom: 0px;
+
+    @include flexbox;
+
+    .main-action {
+      color: $coletive-color;
+      font-size: 2.5em;
+      font-weight: lighter;
+      
+      margin: auto;
+    }
+  }
+}
+
+#main-container {
+  padding-top: 50px;
+}

@@ -9,8 +9,12 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'templates', '
     $stateProvider
       .state('home', {
         url: '/home',
-        templateUrl: 'home.html',
-        controller: 'HomeCtrl'
+        views: {
+          'view-content': {
+            templateUrl: 'home.html',
+            controller: 'HomeCtrl'
+          }
+        }
       })
       .state('logout', {
         url: '/logout',
@@ -19,8 +23,12 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'templates', '
       })
       .state('new_project', {
         url: '/new_project',
-        templateUrl: 'projects/new.html',
-        controller: 'NewProjectCtrl'
+        views: {
+          'view-content': {
+            templateUrl: 'projects/new.html',
+            controller: 'NewProjectCtrl'
+          }
+        }
       })
       .state('logged', {
         url: '/app',
@@ -41,8 +49,12 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'templates', '
       })
       .state('logged.home', {
         url: '/home',
-        templateUrl: 'home.html',
-        controller: 'HomeCtrl'
+        views: {
+          'view-content': {
+            templateUrl: 'home.html',
+            controller: 'HomeCtrl'
+          }
+        }
       })
       .state('logged.admins', {
         url: '/admins',
@@ -51,18 +63,30 @@ angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'templates', '
       })
       .state('logged.admins.index', {
         url: '/',
-        templateUrl: 'admins/index.html',
-        controller: 'AdminIndexCtrl'
+        views: {
+          'view-content': {
+            templateUrl: 'admins/index.html',
+            controller: 'AdminIndexCtrl'
+          }
+        }
       })
       .state('logged.admins.new', {
         url: '/new',
-        templateUrl: 'admins/new.html',
-        controller: 'AdminNewCtrl'
+        views: {
+          'view-content': {
+            templateUrl: 'admins/new.html',
+            controller: 'AdminNewCtrl'
+          }
+        }
       })
       .state('logged.admins.edit', { //state for updating a movie
         url: '/edit/:id',
-        templateUrl: 'admins/edit.html',
-        controller: 'AdminEditCtrl'
+        views: {
+          'view-content': {
+            templateUrl: 'admins/edit.html',
+            controller: 'AdminEditCtrl'
+          }
+        }
       });
       // Exemplo states 
       // .state('manage.constructors', {

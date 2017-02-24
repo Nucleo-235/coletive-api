@@ -8,6 +8,7 @@
   h2 {
     display: none;
   }
+
   ul.projects {
     list-style-type: none;
     padding-left: 0px;
@@ -47,18 +48,6 @@
     column-gap: 0px;
     column-fill: auto;
 
-    @include mq($from: tablet) {
-      -webkit-column-count: 2;
-      -webkit-column-gap: $susy-gutter-width;
-      -webkit-column-fill: auto;
-      -moz-column-count: 2;
-      -moz-column-gap: $susy-gutter-width;
-      -moz-column-fill: auto;
-      column-count: 2;
-      column-gap: $susy-gutter-width;
-      column-fill: auto;
-    }
-
     & > li {
       margin-top: $susy-gutter-width;
       padding: $susy-gutter-width;
@@ -84,9 +73,24 @@
       display: inline-block;
     }
   }
+
   .share {
     ul {
       display: none;
+    }
+  }
+
+  @include mq($from: tablet) {
+    ul.tasks {
+      -webkit-column-count: 2;
+      -webkit-column-gap: $susy-gutter-width;
+      -webkit-column-fill: auto;
+      -moz-column-count: 2;
+      -moz-column-gap: $susy-gutter-width;
+      -moz-column-fill: auto;
+      column-count: 2;
+      column-gap: $susy-gutter-width;
+      column-fill: auto;
     }
   }
 }

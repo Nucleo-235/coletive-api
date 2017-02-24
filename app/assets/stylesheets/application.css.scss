@@ -13,27 +13,20 @@
  *= require_self
  */
 
+@import "variables";
+
 @import "bourbon";
-@import "bootstrap-sprockets";
-@import "bootstrap";
+// @import "bootstrap-sprockets";
+// @import "bootstrap";
 @import "font-awesome";
 
 @import "susy/sass/susy";
 @import 'sass-mq/mq';
+@import 'mixins/flex';
 
-@import "variables";
 @import "grid";
+@import "global";
+@import "header";
 @import "pages/home";
 @import "pages/projects";
 @import "pages/project_new";
-
-
-body {
-  background-color: $main-bg;
-}
-.content {
-  @include container;
-  padding-left: $susy-gutter-width;
-  padding-right: $susy-gutter-width;
-  background-color: $main-bg;
-}

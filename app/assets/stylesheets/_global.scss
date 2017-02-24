@@ -1,0 +1,45 @@
+body {
+  background-color: $main-bg;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333333;
+  margin: 0px;
+}
+.content {
+  @include container;
+  padding-left: $susy-gutter-width;
+  padding-right: $susy-gutter-width;
+  background-color: $main-bg;
+}
+
+.button {
+  background: $standard-button-bg;
+  color: $standard-button-color;
+  border-radius: 0.2em;
+  border:none;
+
+  text-transform: uppercase;
+  text-align: center;
+
+  span {
+    text-align: left;
+    display: inline-block;
+  }
+
+  font-size: 1.3em;
+  font-weight: 200;
+
+  padding: 20px 65px 20px 15px;
+  width: 100%;
+  &.btn-success {
+    background-color: $coletive-color;
+    color: $coletive-inverse-color;
+  }
+}
+
+@include mq($from: tablet) {
+  .button {
+    width: auto;
+  }
+}
