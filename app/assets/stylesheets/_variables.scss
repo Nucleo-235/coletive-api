@@ -4,9 +4,21 @@ $main-text-color: #000000;
 $coletive-color: #00b8a2;
 $coletive-inverse-color: #fff;
 
+$success-text-color: #fff;
+$success-bg: #76e66a;
+
 $header-bg: #fafafa;
+$subheader-text-color: $success-text-color;
+$subheader-disabled-bg: #dbdbdb;
+$subheader-active-bg: #ffc800;
+$subheader-success-bg: $success-bg;
 
 $splitter-color: #cccccc;
 
 $standard-button-bg: #cccccc;
-$standard-button-color: #fff;
+$standard-button-disabled-bg: #dbdbdb;
+$standard-button-color: $success-text-color;
+
+
+$header-height: 60px;
+$splitter-margin: 15px;

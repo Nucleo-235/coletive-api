@@ -35,6 +35,14 @@ body {
   &.btn-success {
     background-color: $coletive-color;
     color: $coletive-inverse-color;
+
+    &:disabled, &.disabled {
+      background: $standard-button-disabled-bg;
+    }
+  }
+
+  &:disabled, &.disabled {
+    background: $standard-button-disabled-bg;
   }
 }
 

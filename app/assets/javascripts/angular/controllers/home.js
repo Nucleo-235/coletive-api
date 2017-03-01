@@ -1,5 +1,7 @@
 angular.module('MyApp')
   .controller('HomeCtrl', function($scope, $rootScope, $state, $auth, $q, Project, $uibModal) {
+    $rootScope.hasActions = false;
+
     function successLogged(data) {
       console.log('logged')
     };

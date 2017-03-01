@@ -1,37 +1,45 @@
 section#new-project
-  .step-1 ng-show="step == 1" ng-include="'sessions/_login.html'"
-  .step-2 ng-show="step == 2"
-    h2 Selecione o board
-    p Somente serão exibidos boards publicos
+  nav ng-show="step > 1" 
+    ul.steps
+      li ng-class="{'active': step == 2, 'done': step > 2}"
+        span 1
+      li ng-class="{'active': step == 3, 'done': step > 3}"
+        span 2
+      li ng-class="{'active': step == 4}"
+        span 3
+  .login-step.step-1 ng-show="step == 1" ng-include="'sessions/_login.html'"
+  .step.step-2 ng-show="step == 2"
+    h2 Escolher o projeto
+    p.help Somente serão exibidos boards publicos
+    div ng-show="!formData.loadingBoards && formData.boards.length == 0"
+      p.info Você não tem nenhuma lista de tarefas criada.
+      p.above Clique no botão abaixo para acessar a sua conta de trello e 
     form ng-submit="projectSelected()"
       .form-group show-errors=""
-        label.control-label
-          i.ion-board
-          | Board
         ul
-          li ng-show="formData.loadingBoards" ng-bind="getOptionPlaceholder(formData.boards, formData.loadingBoards, ' - Selecione uma Board - ', 'Carregando Boards ...')"
+          li ng-if="formData.loadingBoards" ng-bind="getOptionPlaceholder(formData.boards, formData.loadingBoards, ' - Selecione uma Board - ', 'Carregando Boards ...')"
           li ng-repeat="board in formData.boards" id="selectradius-{{board.id}}"
-            .radio
+            .radio ng-class="{'selected': board == formData.selectedBoard}"
               label
                 input type="radio" ng-required="true" name="radius" ng-model="formData.selectedBoard" ng-value="board" ng-change="boardChanged()"
-                | {{ board.name }}
-      input type="submit" value="Próximo"
-  .step-3 ng-show="step == 3"
+                span ng-bind="board.name"
+      input.button.btn-success type="submit" ng-disabled="!formData.selectedBoard" value="Avançar"
+  .step.step-3 ng-show="step == 3"
     h2 Selecione o TODO
     p selecione qual lista sua é referente ao TODO
+    div ng-show="!formData.loadingBoards && formData.boards.length == 0"
+      p.info Você não tem nenhuma lista de tarefas criada.
+      p.above Clique no botão abaixo para acessar a sua conta de Trello e criar uma lista de tarefas
     form ng-submit="todoSelected()"
       .form-group show-errors=""
-        label.control-label
-          i.ion-list
-          | Lista
         ul
           li ng-show="formData.loadingLists" ng-bind="getOptionPlaceholder(formData.lists, formData.loadingLists, ' - Selecione uma Lista - ', 'Carregando Listas ...')"
           li ng-repeat="list in formData.lists" id="selectradius-{{list.id}}"
-            .radio
+            .radio ng-class="{'selected': list == formData.selectedList}"
               label
                 input type="radio" name="radius" ng-required="true" ng-model="formData.selectedList" ng-value="list" ng-change="listChanged()"
                 | {{ list.name }}
       input type="submit" value="Próximo"
-  .step-4 ng-show="step == 4"
+  .step.step-4 ng-show="step == 4"
     p Projeto cadastrado com sucesso
     a ui-sref="home" Continuar

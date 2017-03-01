@@ -1,11 +1,12 @@
 /! Content Wrapper. Contains page content
 div ng-app="MyApp"
   header
-    h1 Coletive.Co
-    nav
+    h1 ng-bind="pageTitle || 'Coletive.Co'"
+    nav ng-show="hasActions"
       a.main-action ng-hide="hasBack || hasCustomNav" href="#"
         i.fa.fa-close
-      a.main-action ng-show="hasBack" href="#"  ng-click="back()"
+      a.main-action.back ng-show="hasBack" href="" ng-click="back()"
+        i.fa.fa-angle-left
       a.main-action ng-show="hasCustomNav" href=""  ng-click="goToCustomNav()"
 
   #main-container

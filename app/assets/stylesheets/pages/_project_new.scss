@@ -1,24 +1,88 @@
 #new-project {
-  margin-top: 10px;
   @include row;
-
   & > * {
-    @include cleanColumn((small: 8));
-    margin-left: auto;
-    margin-right: auto;
+    @include column((small: 12));
+  }
 
+  nav {
+    background-color: $header-bg;
+    max-height: 57px;
+
+    ul {
+      list-style: none;
+      padding: 0px;
+      margin: 0px;
+      @include row;
+
+      li {
+        @include column((small: 4));
+        display: inline-block;
+        border-right: 1px solid $splitter-color;
+        border-bottom: 3px solid $splitter-color;
+        padding: 0.5em 0px;
+        text-align: center;
+        height: auto;
+
+        &:last-child {
+          border-right: none;
+        }
+
+        a, span {
+          background-color: $subheader-disabled-bg;
+          // border: darken($subheader-disabled-bg, 20%) solid 1px;
+          border-radius: 20px;
+          padding: 2.5px 10px;
+          font-size:2em;
+          color: $subheader-text-color;
+        }
+        a {
+          text-decoration: none;
+        }
+
+        &.active {
+          background-color: transparentize($subheader-active-bg, 0.8);
+          border-bottom: 3px solid $subheader-active-bg;
+          a, span {
+            background-color: $subheader-active-bg;
+          }
+        }
+        &.done {
+          background-color: transparentize($subheader-success-bg, 0.8);
+          border-bottom: 3px solid $subheader-success-bg;
+          a, span {
+            display: none;
+          }
+          &:before {
+            content: "\f00c";
+            background-color: $subheader-success-bg;
+            border-radius: 20px;
+            padding: 2.5px 10px;
+
+            @extend .fa;
+            font-size: 1.7em;
+            line-height: 1.5em;
+
+            color: $subheader-text-color;
+          }
+        }
+      }
+    }
   }
 
   .step-1 {
     .session {
       .not-logged {
         @include row;
+        padding: 0px $splitter-margin;
+
         & > * {
           text-align: center;
           margin: 0px;
-          padding: 2.3em 0px;
+          padding: 2.3em 16.6%;
 
-          @include column((small: 12, tablet: 6));
+          @include cleanColumn((small: 8, tablet: 6));
+          margin-left: auto;
+          margin-right: auto;
 
           .above {
             display: none;
@@ -45,11 +109,99 @@
     }
   }
 
+  .step {
+    height: calc(100% - 57px);
+
+    h2, p.help {
+      display: none;
+    }
+    ul {
+      list-style: none;
+      padding: 0px;
+      margin: 0px;
+    }
+    form {
+      position: relative;
+      height: 100%;
+
+      .form-group {
+        position: absolute;
+        top:0px;
+        bottom:65px;
+        width: 100%;
+      }
+
+      input[type="submit"] {
+        position: absolute;
+        bottom:0px;
+        width: 90%;
+        left: 5%;
+      }
+    }
+  }
+
+  .step-2 {
+    li {
+      display: block;
+      width: 100%;
+    }
+    .radio {
+      padding-left: $splitter-margin;
+      padding-right: $splitter-margin;
+      label {
+        display: block;
+        width: calc(100% - 65px);
+        max-width: calc(100% - 65px);
+        border-bottom: 1px solid $splitter-color;
+        padding: 1em 15px 1em 50px;
+
+        input[type="radio"] {
+          opacity: 0;
+        }
+        span {
+          color: inherit;
+          vertical-align: top;
+          padding-top: 12px;
+          margin-left: -10px;
+          display: inline-block;
+        }
+
+        &:before {
+          content: "\f096";
+          padding: 2.5px 10px;
+          margin-left: -50px;
+          vertical-align: top;
+
+          @extend .fa;
+          font-size: 3em;
+          line-height: 1em;
+
+          color: $standard-button-bg;
+        }
+      }
+
+      &.selected {
+        background-color: $success-bg;
+        color: $success-text-color;
+        label {
+          span {
+            margin-left: -16px;
+          }
+          &:before {
+            content: "\f046";
+            color: inherit;
+          }
+        }
+      }
+    }
+  }
+
   @include mq($from: tablet) {
     margin-top: 20px;
     .step-1 {
       .session {
         .not-logged {
+          padding: 2.3em 0px;
           .above {
             display: block;
           }

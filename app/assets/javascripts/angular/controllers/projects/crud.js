@@ -1,5 +1,10 @@
 angular.module('MyApp').controller('NewProjectCtrl', 
   ['$scope', '$rootScope', '$auth', 'Project', 'toastr', function($scope, $rootScope, $auth, Project, toastr) {
+    $rootScope.hasActions = true;
+    $rootScope.back = function() {
+      $scope.step = $scope.step - 1;
+    };
+
     $scope.isAuthenticated = function() {
       return $auth.userIsAuthenticated();
     };
@@ -57,6 +62,26 @@ angular.module('MyApp').controller('NewProjectCtrl',
       }
     };
 
+    function checkStepTitle() {
+      if ($scope.step == 1) {
+        $rootScope.pageTitle = false;
+        $rootScope.hasBack = false;
+      } else {
+        $rootScope.hasBack = true;
+        if ($scope.step == 2) {
+          $rootScope.pageTitle = 'ESCOLHER O PROJETO';
+        } else if ($scope.step == 3) {
+          $rootScope.pageTitle = 'ESCOLHER A LISTA DE TAREFAS';
+        } else if ($scope.step == 4) {
+          $rootScope.pageTitle = 'DESCRIÇÃO E INFORMAÇÕES';
+        } else {
+          $rootScope.pageTitle = false;
+        }
+      }
+    }
+
+    $scope.$watch('step', checkStepTitle);
+
     $scope.getOptionPlaceholder = function(list, loading, placeholderMessage, loadingMessage) {
       return loading ? loadingMessage : placeholderMessage;
     };
@@ -65,6 +90,7 @@ angular.module('MyApp').controller('NewProjectCtrl',
     if ($scope.step > 1) {
       $scope.loggedSucessfully();
     }
+    checkStepTitle();
 
     $rootScope.$on('auth:login-success', function(ev, user) {
       if ($scope.step == 1) {
