@@ -73,7 +73,7 @@ class ProjectsController < ApiController
     end
 
     def project_params
-      params.require(:project).permit(:name, :slug, :user_id, :description, :documentation_url, :code_url, :assets_url, 
+      params.require(:project).permit(:name, :slug, :user_id, :description, :extra_info, :documentation_url, :code_url, :assets_url, 
         info_attributes: [:id, :board_id, :todo_list_id])
     end
 end

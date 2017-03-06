@@ -16,6 +16,7 @@
 #  public            :boolean          default(TRUE)
 #  last_synced_at    :datetime
 #  closed            :boolean          default(FALSE)
+#  extra_info        :text
 #
 
 class TrelloProjectSerializer < Project

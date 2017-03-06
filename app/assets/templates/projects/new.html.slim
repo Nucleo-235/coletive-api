@@ -26,7 +26,7 @@ section#new-project
               label
                 input type="radio" ng-required="true" name="board" ng-model="formData.selectedBoard" ng-value="board" ng-change="boardChanged()"
                 span ng-bind="board.name"
-      input.button.btn-success type="submit" ng-disabled="!formData.selectedBoard" value="Avançar"
+      input.button.btn-success type="submit" ng-disabled="!canMoveFromStep2()" value="Avançar"
   .step.step-3 ng-show="step == 3"
     h2 Selecione o TODO
     p.help selecione qual lista sua é referente ao TODO
@@ -39,12 +39,24 @@ section#new-project
     div.info ng-show="formData.loadingLists" Carregando Listas ...
     form ng-submit="todoSelected()"
       .form-group ng-if="!formData.loadingLists && formData.boards.length > 0"
-        slick dots="true" draggable="true" arrows="false" slides-to-show="1" mobileFirst="true" mobile-first="true" slides-to-scroll="1" touch-move="true" init-onload="true" data="formData.lists"
+        slick dots="true" draggable="true" arrows="false" slides-to-show="1" mobileFirst="true" mobile-first="true" slides-to-scroll="1" touch-move="true" init-onload="true" data="formData.lists" current-index="selectedListIndex" initial-slide="{{selectedListIndex}}"
           .radio ng-class="{'selected': list == formData.selectedList}" ng-repeat="list in formData.lists"
             label
               input type="radio" name="list" ng-required="true" ng-model="formData.selectedList" ng-value="list" ng-change="listChanged()"
               span ng-bind="list.name"
-      input.button.btn-success type="submit" ng-disabled="!formData.selectedList" value="Avançar"
+      input.button.btn-success type="submit" ng-disabled="!canMoveFromStep3()" value="Avançar"
   .step.step-4 ng-show="step == 4"
+    h2 Preencha os ultimos detalhes
+    p.help Preencha a descrição sobre seu projeto e outras informações adicionais
+    form ng-submit="descriptionFilled()"
+      .form-group
+        .input-group
+          label for="description" Descrição do Projeto
+          textarea name="description" ng-model="formData.description" class="form-control" rows="3" placeholder="Coloque uma descrição do seu projeto, conte-nos um pouco a respeito dele, para que as pessoas entendam melhor."
+        .input-group
+          label for="extra_info" Informações complementares
+          textarea name="extra_info" ng-model="formData.extra_info" class="form-control" rows="5" placeholder="Util para colocar detalhes imporantes, como links ou locais onde o código-fonte ou as referências estão salvos, e etc."
+      input.button.btn-success type="submit" ng-disabled="!canMoveFromStep4()" value="Avançar"
+  .step.step-5 ng-show="step == 5"
     p Projeto cadastrado com sucesso
     a ui-sref="home" Continuar

@@ -34,12 +34,35 @@ angular.module('MyApp').controller('NewProjectCtrl',
       });
     };
 
+    $scope.canMoveFromStep2 = function() {
+      return $scope.formData.selectedBoard;
+    }
+
+    $scope.canMoveFromStep3 = function() {
+      return $scope.formData.selectedList;
+    }
+
+    $scope.canMoveFromStep4 = function() {
+      return $scope.formData.description && $scope.formData.description.length > 0;
+    }
+
     $scope.projectSelected = function() {
-      if ($scope.formData.selectedBoard) {
+      if ($scope.canMoveFromStep2()) {
         $scope.step = 3;
+        $scope.formData.description = $scope.formData.selectedBoard.desc;
 
         $scope.formData.loadingLists = true;
         Project.trello_lists($scope.formData.selectedBoard.id).then(function(data) {
+          if (data && data.length > 0) {
+            $scope.formData.selectedList = data.first_or_null(function(item, index) {
+              var lower_name = item.name.toLowerCase();
+              return lower_name == 'todo' || lower_name == 'to-do' || lower_name == 'to do' || lower_name == 'a fazer' || lower_name == 'pendente';
+            });
+            if ($scope.formData.selectedList)
+              $scope.selectedListIndex = data.indexOf($scope.formData.selectedList);
+            else
+              $scope.selectedListIndex = 0;
+          }
           $scope.formData.lists = data;
           $scope.formData.loadingLists = false;
         }, function() {
@@ -49,15 +72,24 @@ angular.module('MyApp').controller('NewProjectCtrl',
     };
 
     $scope.todoSelected = function() {
-      if ($scope.formData.selectedBoard && $scope.formData.selectedList) {
+      if ($scope.canMoveFromStep2() && $scope.canMoveFromStep3()) {
+        $scope.step = 4;
+      }
+    }
+
+    $scope.descriptionFilled = function() {
+      if ($scope.canMoveFromStep2() && $scope.canMoveFromStep3() && $scope.canMoveFromStep4()) {
         var board = $scope.formData.selectedBoard;
         var list = $scope.formData.selectedList;
         var project = new Project();
         project.name = board.name;
-        project.description = board.desc;
+        project.description = $scope.formData.description;
+        project.extra_info = $scope.formData.extra_info;
         project.info = { board_id: board.id,todo_list_id: list.id };
         project.save().then(function(data) {
-          $scope.step = 4;
+          $scope.step = 5;
+        }, function(error) {
+          console.log(error);
         });
       }
     };
