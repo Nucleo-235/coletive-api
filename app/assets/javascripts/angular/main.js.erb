@@ -1,5 +1,20 @@
 <% apiFinalURL = (ENV["API_URL"] ? ENV["API_URL"] : "http://localhost:3000/api/v1") %>
-angular.module('MyApp', ['ngResource', 'ngMessages', 'ngAnimate', 'templates', 'toastr', 'ui.router', 'ng-token-auth', 'ui.bootstrap', 'ngFileUpload', 'bootstrapLightbox', 'rails', 'ui.mask', 'ui.bootstrap.showErrors'])
+angular.module('MyApp', ['ngResource',
+    'ngMessages',
+    'ngTouch',
+    'ngAnimate',
+    'templates',
+    'toastr',
+    'ui.router',
+    'ng-token-auth',
+    'ui.bootstrap',
+    'ngFileUpload',
+    'bootstrapLightbox',
+    'rails',
+    'ui.mask',
+    'ui.bootstrap.showErrors',
+    'slick']
+  )
   .constant('config', {
       API_URL: "<%= apiFinalURL %>",
       ROOT_ROUTE: '/home',

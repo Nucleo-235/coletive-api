@@ -1,5 +1,8 @@
-$main-bg: #fff;
-$main-text-color: #000000;
+$white-color: #fff;
+$black-color: #000000;
+
+$main-bg: $white-color;
+$main-text-color: $black-color;
 
 $coletive-color: #00b8a2;
 $coletive-inverse-color: #fff;
@@ -20,6 +23,7 @@ $standard-button-bg: #cccccc;
 $standard-button-disabled-bg: #dbdbdb;
 $standard-button-color: $success-text-color;
 
+$list-header-bg: #d7dbdb;
 
 $header-height: 60px;
 $splitter-margin: 15px;

@@ -29,22 +29,21 @@ section#new-project
       input.button.btn-success type="submit" ng-disabled="!formData.selectedBoard" value="Avançar"
   .step.step-3 ng-show="step == 3"
     h2 Selecione o TODO
-    p selecione qual lista sua é referente ao TODO
+    p.help selecione qual lista sua é referente ao TODO
     div.info ng-show="!formData.loadingBoards && formData.boards.length == 0"
       p.main 
         strong Você não tem nenhuma lista de tarefas criada.
       p.above Clique no botão abaixo para acessar a sua conta de Trello e criar uma lista de tarefas
       a.button.btn-external href="" 
         span Adicionar um projeto
+    div.info ng-show="formData.loadingLists" Carregando Listas ...
     form ng-submit="todoSelected()"
-      .form-group show-errors=""
-        ul
-          li ng-show="formData.loadingLists" ng-bind="getOptionPlaceholder(formData.lists, formData.loadingLists, ' - Selecione uma Lista - ', 'Carregando Listas ...')"
-          li ng-repeat="list in formData.lists" id="selectradius-{{list.id}}"
-            .radio ng-class="{'selected': list == formData.selectedList}"
-              label
-                input type="radio" name="list" ng-required="true" ng-model="formData.selectedList" ng-value="list" ng-change="listChanged()"
-                | {{ list.name }}
+      .form-group ng-if="!formData.loadingLists && formData.boards.length > 0"
+        slick dots="true" draggable="true" arrows="false" slides-to-show="1" mobileFirst="true" mobile-first="true" slides-to-scroll="1" touch-move="true" init-onload="true" data="formData.lists"
+          .radio ng-class="{'selected': list == formData.selectedList}" ng-repeat="list in formData.lists"
+            label
+              input type="radio" name="list" ng-required="true" ng-model="formData.selectedList" ng-value="list" ng-change="listChanged()"
+              span ng-bind="list.name"
       input.button.btn-success type="submit" ng-disabled="!formData.selectedList" value="Avançar"
   .step.step-4 ng-show="step == 4"
     p Projeto cadastrado com sucesso

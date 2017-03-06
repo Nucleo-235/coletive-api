@@ -1,7 +1,8 @@
 /! Content Wrapper. Contains page content
 div ng-app="MyApp"
   header
-    h1 ng-bind="pageTitle || 'Coletive.Co'"
+    h1 ng-show="!pageTitle" Coletive.Co
+    h2 ng-show="pageTitle" ng-bind="pageTitle" 
     nav ng-show="hasActions"
       a.main-action ng-hide="hasBack || hasCustomNav" href="#"
         i.fa.fa-close

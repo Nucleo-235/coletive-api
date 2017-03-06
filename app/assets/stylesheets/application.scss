@@ -11,6 +11,8 @@
  * file per style scope.
  *
  *= require_self
+ *= require slick-carousel/slick/slick.css
+ *= require slick-carousel/slick/slick-theme.css
  */
 
 @import "variables";
