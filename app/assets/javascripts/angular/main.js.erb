@@ -1,4 +1,5 @@
 <% apiFinalURL = (ENV["API_URL"] ? ENV["API_URL"] : "http://localhost:3000/api/v1") %>
+<% viewFinalURL = (ENV["HOST_URL"] ? ENV["HOST_URL"] : "http://localhost:3000") %>
 angular.module('MyApp', ['ngResource',
     'ngMessages',
     'ngTouch',
@@ -13,10 +14,12 @@ angular.module('MyApp', ['ngResource',
     'rails',
     'ui.mask',
     'ui.bootstrap.showErrors',
-    'slick']
-  )
+    'slick',
+    'ngclipboard'
+  ])
   .constant('config', {
       API_URL: "<%= apiFinalURL %>",
+      VIEW_URL: "<%= viewFinalURL %>",
       ROOT_ROUTE: '/home',
       ROOT_STATE: 'home'
   })

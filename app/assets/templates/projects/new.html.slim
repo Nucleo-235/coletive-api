@@ -17,10 +17,10 @@ section#new-project
       p.above Clique no botão abaixo para acessar a sua conta de trello e criar um projeto
       a.button.btn-external href="" 
         span Adicionar um projeto
+    div.info ng-show="formData.loadingBoards" Carregando Boards ...
     form ng-submit="projectSelected()"
       .form-group show-errors=""
         ul
-          li ng-if="formData.loadingBoards" ng-bind="getOptionPlaceholder(formData.boards, formData.loadingBoards, ' - Selecione uma Board - ', 'Carregando Boards ...')"
           li ng-repeat="board in formData.boards" id="selectradius-{{board.id}}"
             .radio ng-class="{'selected': board == formData.selectedBoard}"
               label
@@ -57,6 +57,19 @@ section#new-project
           label for="extra_info" Informações complementares
           textarea name="extra_info" ng-model="formData.extra_info" class="form-control" rows="5" placeholder="Util para colocar detalhes imporantes, como links ou locais onde o código-fonte ou as referências estão salvos, e etc."
       input.button.btn-success type="submit" ng-disabled="!canMoveFromStep4()" value="Avançar"
-  .step.step-5 ng-show="step == 5"
-    p Projeto cadastrado com sucesso
-    a ui-sref="home" Continuar
+  .final-step ng-show="step == 5"
+    .main
+      h2 Projeto e tarefas cadastradas com sucesso!
+      p Você agora pode compartilhar suas tarefas e encontrar colaboradores.
+      .share ng-if="project"
+        div ng-include="'shared/_share.html'" ng-init="url=project.fullUrl();show_url=true;"
+    .tip
+      p
+        strong Dica
+        br/
+        | Grupos de Facebook que focam em organizações em rede e colaboração para ajudar no seu projeto:
+      ul.share-at
+        li 
+          a href="facebook.com/empresalivre" Empresa Livre
+        li 
+          a href="facebook.com/dots" Dots

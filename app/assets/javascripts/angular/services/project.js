@@ -24,5 +24,9 @@ angular.module('MyApp')
         return resource.$get(resource.$url('trello_lists'), params);
       };
 
+      resource.prototype.fullUrl = function() {
+        return config.VIEW_URL + '/#project/' + this.slug;
+      };
+
       return resource;
   }]);

@@ -87,6 +87,7 @@ angular.module('MyApp').controller('NewProjectCtrl',
         project.extra_info = $scope.formData.extra_info;
         project.info = { board_id: board.id,todo_list_id: list.id };
         project.save().then(function(data) {
+          $scope.project = project;
           $scope.step = 5;
         }, function(error) {
           console.log(error);

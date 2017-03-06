@@ -10,6 +10,7 @@ $coletive-inverse-color: #fff;
 $success-color: #76e66a;
 $success-text-color: #fff;
 $success-bg: $success-color;
+$warning-color: #ffc800;
 
 $header-bg: #fafafa;
 $subheader-text-color: $success-text-color;
@@ -22,6 +23,8 @@ $splitter-color: #cccccc;
 $standard-button-bg: #cccccc;
 $standard-button-disabled-bg: #dbdbdb;
 $standard-button-color: $success-text-color;
+
+$tip-color: $warning-color;
 
 $list-header-bg: #d7dbdb;
 

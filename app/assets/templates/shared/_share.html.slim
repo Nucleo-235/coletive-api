@@ -2,6 +2,11 @@
   span Share
   ul
     li
-      a.facebook href="" ng-click="share('facebook', url)" Facebook
+      a.facebook href="" ng-click="share('facebook', url)"
+        i.fa.fa-facebook
     li
-      a.facebook href="" ng-click="share('email', url)" Email
+      a.email href="" ng-click="share('email', url)"
+        i.fa.fa-envelope
+  .address ng-if="show_url"
+    strong link
+    input.disabled type="text" ngclipboard="" data-clipboard-text="{{url}}" value="{{url}}"

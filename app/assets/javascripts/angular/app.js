@@ -15,6 +15,9 @@
 //= require angular-touch/angular-touch.js
 //= require slick-carousel/slick/slick.js
 //= require angular-slick/dist/slick.js
+//= require clipboard/dist/clipboard.js
+//= require ngclipboard/dist/ngclipboard.js
+//= require angular-slick/dist/slick.js
 //= require ng-token-auth/dist/ng-token-auth.js
 //= require ng-file-upload/ng-file-upload-shim.js
 //= require ng-file-upload/ng-file-upload.js
