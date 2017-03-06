@@ -1,7 +1,7 @@
 #new-project {
-  @include row;
+  // @include row;
   & > * {
-    @include column((small: 12));
+    // @include column((small: 12));
   }
 
   nav {
@@ -72,15 +72,15 @@
   .step-1 {
     .session {
       .not-logged {
-        @include row;
+        // @include row;
         padding: 0px $splitter-margin;
 
         & > * {
           text-align: center;
           margin: 0px;
-          padding: 2.3em 16.6%;
+          padding: 2.3em 8.33%;
 
-          @include cleanColumn((small: 8, tablet: 6));
+          @include cleanColumn((small: 10, tablet: 6));
           margin-left: auto;
           margin-right: auto;
 
@@ -115,6 +115,30 @@
     h2, p.help {
       display: none;
     }
+    .info {
+      position: relative;
+      height: 100%;
+      width: 80%;
+      margin: auto;
+      padding-top: 30%;
+
+      .button {
+        width: calc(100% - 80px);
+      }
+
+      p {
+        text-align: center;
+      }
+
+      p.main {
+        color: $coletive-color;
+      }
+
+      & > * {
+        margin-bottom: 10px;
+        display: block;
+      }
+    }
     ul {
       list-style: none;
       padding: 0px;
@@ -127,13 +151,13 @@
       .form-group {
         position: absolute;
         top:0px;
-        bottom:65px;
+        bottom:72px;
         width: 100%;
       }
 
       input[type="submit"] {
         position: absolute;
-        bottom:0px;
+        bottom:5px;
         width: 90%;
         left: 5%;
       }
@@ -195,8 +219,10 @@
       }
     }
   }
+}
 
-  @include mq($from: tablet) {
+@include mq($from: tablet) {
+  #new-project {
     margin-top: 20px;
     .step-1 {
       .session {

@@ -19,12 +19,15 @@ body {
   border-radius: 0.2em;
   border:none;
 
+  text-decoration: none;
   text-transform: uppercase;
   text-align: center;
 
   span {
     text-align: left;
     display: inline-block;
+    width: calc(100% - 80px);
+    max-width: calc(100% - 80px);
   }
 
   font-size: 1.3em;
@@ -33,6 +36,15 @@ body {
   padding: 20px 65px 20px 15px;
   width: 100%;
   &.btn-success {
+    background-color: $coletive-color;
+    color: $coletive-inverse-color;
+
+    &:disabled, &.disabled {
+      background: $standard-button-disabled-bg;
+    }
+  }
+
+  &.btn-external {
     background-color: $coletive-color;
     color: $coletive-inverse-color;
 

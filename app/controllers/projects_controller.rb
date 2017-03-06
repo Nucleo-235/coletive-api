@@ -11,7 +11,10 @@ class ProjectsController < ApiController
   end
 
   def trello_boards
-    render json: current_user.trello_open_boards
+    registered_board_ids = TrelloProjectInfo.joins(:project).where(projects: { user_id: current_user.id }).uniq.pluck(:board_id)
+    all_boards = current_user.trello_open_boards
+    trello_boards = all_boards.select { |e| !registered_board_ids.include?(e.id) }
+    render json: trello_boards
   end
 
   def trello_lists

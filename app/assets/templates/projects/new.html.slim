@@ -11,9 +11,12 @@ section#new-project
   .step.step-2 ng-show="step == 2"
     h2 Escolher o projeto
     p.help Somente serão exibidos boards publicos
-    div ng-show="!formData.loadingBoards && formData.boards.length == 0"
-      p.info Você não tem nenhuma lista de tarefas criada.
-      p.above Clique no botão abaixo para acessar a sua conta de trello e 
+    div.info ng-show="!formData.loadingBoards && formData.boards.length == 0"
+      p.main
+        strong Você não tem nenhuma lista de tarefas criada.
+      p.above Clique no botão abaixo para acessar a sua conta de trello e criar um projeto
+      a.button.btn-external href="" 
+        span Adicionar um projeto
     form ng-submit="projectSelected()"
       .form-group show-errors=""
         ul
@@ -21,15 +24,18 @@ section#new-project
           li ng-repeat="board in formData.boards" id="selectradius-{{board.id}}"
             .radio ng-class="{'selected': board == formData.selectedBoard}"
               label
-                input type="radio" ng-required="true" name="radius" ng-model="formData.selectedBoard" ng-value="board" ng-change="boardChanged()"
+                input type="radio" ng-required="true" name="board" ng-model="formData.selectedBoard" ng-value="board" ng-change="boardChanged()"
                 span ng-bind="board.name"
       input.button.btn-success type="submit" ng-disabled="!formData.selectedBoard" value="Avançar"
   .step.step-3 ng-show="step == 3"
     h2 Selecione o TODO
     p selecione qual lista sua é referente ao TODO
-    div ng-show="!formData.loadingBoards && formData.boards.length == 0"
-      p.info Você não tem nenhuma lista de tarefas criada.
+    div.info ng-show="!formData.loadingBoards && formData.boards.length == 0"
+      p.main 
+        strong Você não tem nenhuma lista de tarefas criada.
       p.above Clique no botão abaixo para acessar a sua conta de Trello e criar uma lista de tarefas
+      a.button.btn-external href="" 
+        span Adicionar um projeto
     form ng-submit="todoSelected()"
       .form-group show-errors=""
         ul
@@ -37,9 +43,9 @@ section#new-project
           li ng-repeat="list in formData.lists" id="selectradius-{{list.id}}"
             .radio ng-class="{'selected': list == formData.selectedList}"
               label
-                input type="radio" name="radius" ng-required="true" ng-model="formData.selectedList" ng-value="list" ng-change="listChanged()"
+                input type="radio" name="list" ng-required="true" ng-model="formData.selectedList" ng-value="list" ng-change="listChanged()"
                 | {{ list.name }}
-      input type="submit" value="Próximo"
+      input.button.btn-success type="submit" ng-disabled="!formData.selectedList" value="Avançar"
   .step.step-4 ng-show="step == 4"
     p Projeto cadastrado com sucesso
     a ui-sref="home" Continuar

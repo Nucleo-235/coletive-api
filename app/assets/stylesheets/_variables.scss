@@ -4,14 +4,15 @@ $main-text-color: #000000;
 $coletive-color: #00b8a2;
 $coletive-inverse-color: #fff;
 
+$success-color: #76e66a;
 $success-text-color: #fff;
-$success-bg: #76e66a;
+$success-bg: $success-color;
 
 $header-bg: #fafafa;
 $subheader-text-color: $success-text-color;
 $subheader-disabled-bg: #dbdbdb;
 $subheader-active-bg: #ffc800;
-$subheader-success-bg: $success-bg;
+$subheader-success-bg: $success-color;
 
 $splitter-color: #cccccc;
 

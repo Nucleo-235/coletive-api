@@ -77,9 +77,11 @@ $mq-breakpoints: (
   @each $breakpoint, $width in $widthList {
     @if ($breakpoint == small) {
       width: span($width of $susy-columns);
+      max-width: span($width of $susy-columns);
     } @else {
       @include mq($from: $breakpoint) {
         width: span($width of $susy-columns);
+        max-width: span($width of $susy-columns);
       }
     }
   }
