@@ -20,7 +20,7 @@ module Overrides
     def get_resource_from_auth_hash
       @identity = Identity.find_for_oauth auth_hash
 
-      @resource = @identity.user || current_user || user
+      @resource = @identity.user || current_user || new_user(@identity)
 
       if @resource.new_record?
         @oauth_registration = true
