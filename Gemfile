@@ -56,7 +56,7 @@ gem 'best_in_place', '~> 3.0.1'
 
 # users & auth
 gem 'devise', '3.5.3'
-gem 'devise_token_auth'
+gem 'devise_token_auth', '0.1.40'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-instagram'

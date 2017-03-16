@@ -417,7 +417,7 @@ DEPENDENCIES
   coffee-rails
   country_select
   devise (= 3.5.3)
-  devise_token_auth
+  devise_token_auth (= 0.1.40)
   factory_girl_rails
   font-awesome-rails
   friendly_id (~> 5.1.0)

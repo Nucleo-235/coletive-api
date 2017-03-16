@@ -25,7 +25,7 @@ module Overrides
         provider: @identity.provider,
         uid: (@identity.uid || @identity.email)
       })
-      
+
       if @resource.new_record?
         @oauth_registration = true
         set_random_password
