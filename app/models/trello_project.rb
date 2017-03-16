@@ -41,7 +41,7 @@ class TrelloProject < Project
   end
 
   def get_new_cards
-    cards = Trello::Card.from_response user.trello_client.get("lists/#{info.todo_list_id}/cards", { })
+    cards = Trello::Card.from_response user.trello_client.get("/lists/#{info.todo_list_id}/cards", { })
     cards
   end
 
