@@ -43,7 +43,11 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration
       t.string :type
 
       ## Tokens
-      t.json :tokens
+      if json_supported_database?
+        t.json :tokens
+      else
+        t.text :tokens
+      end
 
       t.timestamps
     end
