@@ -19,6 +19,8 @@
 #  extra_info        :text
 #
 
+require 'trello_utils'
+
 class TrelloProject < Project
   has_one :info, class_name: :TrelloProjectInfo, foreign_key: 'project_id', dependent: :destroy
   accepts_nested_attributes_for :info
@@ -92,19 +94,6 @@ class TrelloProject < Project
   def sync
     sync_project_only
     sync_tasks
-  end
-
-  def self.update_or_create(board, user)
-    project_info = TrelloProjectInfo.find_by(board_id: board.id)
-    if !project_info
-      project = TrelloProject.new({name: board.name, description: board.description, info_attributes: {board_id: board.id}})
-      project.user = user
-      project.save!
-    else
-      project = project_info.project
-      project.sync_project_only(board)
-    end
-    project
   end
 
   private

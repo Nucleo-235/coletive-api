@@ -32,6 +32,7 @@
 #
 
 require 'trello'
+require 'trello_utils'
 require 'file_size_validator'
 
 class User < ActiveRecord::Base
@@ -43,7 +44,6 @@ class User < ActiveRecord::Base
   
   has_many :identities, dependent: :destroy
   has_many :projects, dependent: :destroy
-  has_many :project_infos, through: :projects
   has_many :tasks, through: :projects
 
   def masked_email
@@ -78,12 +78,16 @@ class User < ActiveRecord::Base
   def trello_client
     if !defined? @trello_client
       @trello_identity = identities.where(provider: 'trello').first
-      @trello_client = Trello::Client.new(
-        :consumer_key => ENV['TRELLO_KEY'],
-        :consumer_secret => ENV['TRELLO_SECRET'],
-        :oauth_token => @trello_identity.accesstoken,
-        :oauth_token_secret => @trello_identity.secret
-      )
+      if @trello_identity
+        @trello_client = Trello::Client.new(
+          :consumer_key => ENV['TRELLO_KEY'],
+          :consumer_secret => ENV['TRELLO_SECRET'],
+          :oauth_token => @trello_identity.accesstoken,
+          :oauth_token_secret => @trello_identity.secret
+        )
+      else
+        @trello_client = nil
+      end
     end
     @trello_client
   end
@@ -96,7 +100,7 @@ class User < ActiveRecord::Base
   end
 
   def trello_boards(params = {})
-    return Trello::Board.from_response trello_client.get("/members/#{trello_member.username}/boards", params)
+    return Trello::Board.from_response trello_client.get("/members/me/boards", params)
   end
 
   def trello_open_boards
@@ -112,5 +116,25 @@ class User < ActiveRecord::Base
 
   def trello_open_lists(board_id)
     return trello_lists(board_id, {filter: 'open'})
+  end
+
+  def my_trello_cards(params = {})
+    begin
+      return Trello::Card.from_response trello_client.get("/members/me/cards", params)
+    rescue RestClient::RequestTimeout => timeoutError
+      return Trello::Card.from_response trello_client.get("/members/me/cards", params)
+    end
+  end
+
+  def trello_actions(board_id, params = {})
+    return Trello::Action.from_response trello_client.get("/boards/#{board_id}/actions", params)
+  end
+
+  def trello_changed_cards(board_id, last_synced_at, before_date)
+    params = { filter: (TrelloUtils.cards_update_actions + TrelloUtils.cards_delete_actions).join(',') }
+    params[:since] = last_synced_at.to_s if last_synced_at
+    params[:before] = before_date.to_s if before_date
+    actions = trello_actions(board_id, params)
+    TrelloUtils.get_cards_from_actions(actions, self.trello_client)
   end
 end

@@ -79,7 +79,7 @@ class ApplicationController < ActionController::Base
     end
 
     def set_editor_config
-      @can_edit = current_user && current_user.type == Admin.name && params[:view_as] != "user"
+      @can_edit = current_user && current_user.type == 'Admin' && params[:view_as] != "user"
       @inplace_editing_mode = (@can_edit ? 'edit' : 'read')
     end
 
