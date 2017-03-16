@@ -35,12 +35,16 @@ class Project < ActiveRecord::Base
     where(public: true, closed: false)
   end
 
-  def valid_tasks
+  def available_tasks
     # overriden in trello projects
     self.tasks
   end
 
   def sync
-    
+
+  end
+
+  def self.sync_project(project_id)
+    Project.find(project_id).sync
   end
 end

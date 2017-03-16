@@ -4,12 +4,17 @@ class ProjectSyncer
   def perform()
     puts "Sidekiq for ProjectSyncer STARTING"
     Rails.application.routes.default_url_options[:host] = (ENV["HOST_URL"] || 'localhost:3000')
-    
+
     # Cria o cron worker novamente para o dia de amanha
     ProjectSyncer.start
 
-    Project.all.each do |project|
-      project.sync
+    diff = 30.seconds
+    delay = 0
+    User.all.each do |user|
+      if user.trello_client
+        delay = delay + diff
+        ProjectSyncer.delay_for(delay).sync_user(user.id)
+      end
     end
 
     puts "Sidekiq for ProjectSyncer FINISHED"

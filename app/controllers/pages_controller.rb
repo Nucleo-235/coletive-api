@@ -7,7 +7,6 @@ class PagesController < ApplicationController
   before_action :redirect_to_locale_if_not_set, only: [:home]
 
   def home
-    @localized_page = LocalizedPage.get_by_current_locale
     @general_contact = GeneralContact.new
   end
 end

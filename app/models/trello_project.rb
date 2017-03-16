@@ -28,59 +28,83 @@ class TrelloProject < Project
 
   after_create :check_for_sync
 
-  def valid_tasks
+  def get_updated_cards
+    actions = Trello::Action.from_response user.trello_client.get("/boards/#{info.board_id}/actions", { filter: TrelloUtils.cards_update_actions_to_s, since: self.last_synced_at.to_s })
+    TrelloUtils.get_cards_from_actions(actions, user.trello_client)
+  end
+
+  def get_deleted_cards
+    actions = Trello::Action.from_response user.trello_client.get("/boards/#{info.board_id}/actions", { filter: TrelloUtils.cards_delete_actions_to_s, since: self.last_synced_at.to_s })
+    TrelloUtils.get_cards_from_actions(actions, user.trello_client)
+  end
+
+  def get_new_cards
+    cards = Trello::Card.from_response user.trello_client.get("lists/#{info.todo_list_id}/cards", { })
+    cards
+  end
+
+  def available_tasks
     # overriden in trello projects
     self.tasks.where(trello_list_id: self.info.todo_list_id)
   end
 
-  def sync
-    trello_board = Trello::Board.from_response user.trello_client.get("/boards/#{info.board_id}")
-    self.closed = trello_board.closed
-    self.public = trello_board.prefs["permissionLevel"] && trello_board.prefs["permissionLevel"] == "public"
-    self.save
-    
-    # sync tasks
-    trello_cards = Trello::Card.from_response user.trello_client.get("/lists/#{info.todo_list_id}/cards")
-    existing_tasks = valid_tasks.map { |e| e.id }
-    trello_cards.each do |trello_card|
-      task = self.tasks.find_by(type: TrelloTask.name, trello_card_id: trello_card.id)
-      if task
-        task.update_with_card(trello_card)
+  def sync_project_only(trello_board = nil)
+    lastSync = Time.new
+
+    begin
+      trello_board = Trello::Board.from_response user.trello_client.get("/boards/#{info.board_id}") if !trello_board || trello_board.id != info.board_id
+      self.closed = trello_board.closed
+      self.public = trello_board.prefs["permissionLevel"] && trello_board.prefs["permissionLevel"] == "public"
+      self.last_synced_at = lastSync
+      self.save
+    rescue Trello::Error => ex
+      # caso tenha sido removido
+      if ex.message == "unauthorized permission requested"
+        self.destroy
       else
-        task = TrelloTask.create_with_card(self, trello_card)
-      end
-      existing_tasks.delete(task.id) if existing_tasks.include? task.id
-
-      labels = []
-      trello_card.labels.each do |trello_label|
-        labels.push Label.find_or_create_by(name: trello_label.name)
-      end
-
-      existing_labels = task.task_labels.map { |e| e.label.name }
-      labels.each do |label|
-        created_label = task.task_labels.find_or_create_by(label: label)
-        existing_labels.delete(label.name) if existing_labels.include? label.name
-      end
-
-      # remove labels que nao foram mais encontradas
-      existing_labels.each do |not_found_label_name|
-        task.task_labels.where(label: Label.find_by(name: not_found_label_name)).destroy_all
+        puts "Board " + self.name
+        puts ex.inspect
+        raise
       end
     end
-
-    # synca cards que eram validos mas nao apareceram
-    existing_tasks.each do |task_id|
-      task = Task.find(task_id)
-      trello_card = Trello::Card.from_response user.trello_client.get("/cards/#{task.trello_card_id}")
-      task.update_with_card(trello_card)
-    end
-
-    self.last_synced_at = Time.new
-    self.save
   end
 
-  def self.sync_project(project_id)
-    TrelloProject.find(project_id).sync
+  def sync_tasks(trello_cards = nil)
+    if !trello_cards
+      if self.last_synced_at && self.tasks.length > 0
+        trello_cards = get_updated_cards + get_deleted_cards
+      else
+        trello_cards = get_new_cards
+      end
+    end
+
+    # sync tasks
+    # existing_tasks = self.tasks.map { |e| e.id } - não descobri se era realmente necessario
+    member_id = user.trello_member.id
+
+    trello_cards.each do |trello_card|
+      task = TrelloTask.sync_task(trello_card, self, member_id)
+      # existing_tasks.delete(task.id) if (task && existing_tasks.include?(task.id)) - não descobri se era realmente necessario
+      # no metodo de sync usamos isso para deletar tarefas que foram deletadas
+    end
+  end
+
+  def sync
+    sync_project_only
+    sync_tasks
+  end
+
+  def self.update_or_create(board, user)
+    project_info = TrelloProjectInfo.find_by(board_id: board.id)
+    if !project_info
+      project = TrelloProject.new({name: board.name, description: board.description, info_attributes: {board_id: board.id}})
+      project.user = user
+      project.save!
+    else
+      project = project_info.project
+      project.sync_project_only(board)
+    end
+    project
   end
 
   private

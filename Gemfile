@@ -31,6 +31,8 @@ gem 'mail_form'
 # front-end engine
 gem 'slim'
 gem 'slim-rails'
+gem 'inplace_editing'
+gem 'localizable_value'
 
 # front-end libs
 gem 'uglifier', '>= 1.3.0'

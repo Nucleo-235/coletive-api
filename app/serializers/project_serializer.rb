@@ -24,19 +24,19 @@ class ProjectSerializer < ActiveModel::Serializer
   has_one :user
   # has_one :info
   
-  has_many :valid_tasks, key: "tasks", serializer: TaskSerializer
+  has_many :available_tasks, key: "tasks", serializer: TaskSerializer
   has_many :members
 
   def info
     object.info if object.respond_to? :info
   end
 
-  def valid_tasks
-    object.valid_tasks.limit(10)
+  def available_tasks
+    object.available_tasks.limit(10)
   end
 
   def tasks_count
-    object.valid_tasks.count
+    object.available_tasks.count
   end
 
   def members
