@@ -1,3 +1,4 @@
+require 'migration_database_helper'
 include MigrationDatabaseHelper
 
 class DeviseTokenAuthCreateUsers < ActiveRecord::Migration
