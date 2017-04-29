@@ -11,5 +11,11 @@ module Overrides
       end
     end
 
+    def destroy
+      super
+
+      head :no_content
+    end
+
   end
 end
