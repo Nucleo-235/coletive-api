@@ -32,7 +32,7 @@ class ProjectSerializer < ActiveModel::Serializer
   end
 
   def available_tasks
-    object.available_tasks.limit(10)
+    object.available_tasks.limit(3)
   end
 
   def tasks_count
