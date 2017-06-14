@@ -17,10 +17,13 @@
 #  trello_list_id :string
 #  external_url   :string
 #  last_synced_at :datetime
+#  slug           :string
 #
 
 class Task < ActiveRecord::Base
   belongs_to :project
+  extend FriendlyId
+  friendly_id :name, use: [:slugged, :finders]
 
   validates_presence_of :project, :name
 

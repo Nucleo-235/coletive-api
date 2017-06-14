@@ -17,6 +17,7 @@
 #  trello_list_id :string
 #  external_url   :string
 #  last_synced_at :datetime
+#  slug           :string
 #
 
 class TrelloTask < Task
