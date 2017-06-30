@@ -26,7 +26,7 @@ class ProjectsController < ApiController
       @projects = @projects.select(project_columns)
     end
 
-    render json: @projects, include: '**'
+    render json: @projects, include: '**', labels: labels, query: query
   end
 
   def trello_boards
