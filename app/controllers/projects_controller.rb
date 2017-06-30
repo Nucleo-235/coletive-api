@@ -7,7 +7,7 @@ class ProjectsController < ApiController
   def index
     @projects = Project.valid
 
-    query = params[:q]
+    query = params[:query]
     labels = params[:labels]
     labels = labels[1..(labels.length-2)].split(',') if labels.present?
 
