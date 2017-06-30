@@ -7,6 +7,25 @@ class ProjectsController < ApiController
   def index
     @projects = Project.valid
 
+    query = params[:q]
+    labels = params[:labels]
+    labels = labels[1..(labels.length-2)].split(',') if labels.present?
+
+    if (labels.present? && !labels.empty?) || query.present?
+      @projects = @projects.joins(:tasks)
+      if labels.present? && !labels.empty?
+        @projects = @projects.joins(tasks: :task_labels).joins(tasks: { task_labels: :label })
+        @projects = @projects.where('lower(labels.name) in (?)', labels.map { |e| e.downcase  })
+      end
+      if query.present?
+        @projects = @projects.where('lower(tasks.name) like ?', "%#{query.downcase}%")
+      end
+
+      project_columns = Project.column_names.map{|col| "projects.#{col}"}
+      @projects = @projects.group(project_columns)
+      @projects = @projects.select(project_columns)
+    end
+
     render json: @projects, include: '**'
   end
 
@@ -73,7 +92,7 @@ class ProjectsController < ApiController
     end
 
     def project_params
-      params.require(:project).permit(:name, :slug, :user_id, :description, :extra_info, :documentation_url, :code_url, :assets_url, 
+      params.require(:project).permit(:name, :slug, :user_id, :description, :extra_info, :documentation_url, :code_url, :assets_url,
         info_attributes: [:id, :board_id, :todo_list_id])
     end
 end

@@ -26,6 +26,6 @@ class TaskSerializer < ActiveModel::Serializer
   has_many :labels
 
   def labels
-    object.task_labels.map { |task_label| task_label.label.name  }
+    object.task_labels.map { |task_label| task_label.label  }
   end
 end

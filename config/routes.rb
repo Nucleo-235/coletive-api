@@ -9,17 +9,19 @@ Rails.application.routes.draw do
     sessions:  'overrides/sessions',
     omniauth_callbacks:  'overrides/omniauth_callbacks'
   }
-  
+
   scope :api do
     scope :v1 do
       get 'me', to: 'users#me'
+
+      resources :labels, only: [:index]
 
       resources :projects, except: [:new, :edit] do
         get :trello_boards, on: :collection
         get :trello_lists, on: :collection
       end
 
-      resources :users do 
+      resources :users do
         get 'update_image', on: :collection
       end
     end
@@ -27,7 +29,7 @@ Rails.application.routes.draw do
 
   require 'sidekiq/web'
   mount Sidekiq::Web, at: '/sidekiq-dashboard'
-  
+
   # resources :services, only: [ :create, :update, :destroy ]
   # resources :work_contacts, only: [:create], :path => "trabalhe_conosco"
   # resources :general_contacts, only: [:create], :path => "contato"

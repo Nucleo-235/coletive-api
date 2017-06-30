@@ -82,7 +82,14 @@ class TrelloTask < Task
 
         labels = []
         trello_card.labels.each do |trello_label|
-          labels.push Label.find_or_create_by(name: trello_label.name)
+          label = Label.find_or_create_by(name: trello_label.name)
+          if !label.color_rgb
+            label.color_rgb = trello_label.color
+            label.border_color_rgb = trello_label.color
+            label.font_color_rgb = 'white'
+            label.save!
+          end
+          labels.push label
         end
 
         existing_labels = task.task_labels.map { |e| e.label.name }
@@ -100,7 +107,7 @@ class TrelloTask < Task
         task = project.tasks.find_by(type: TrelloTask.name, trello_card_id: trello_card.id)
         task.destroy if task && !valid # só apaga se na for valido
         # if task
-        #   task.update_with_card(trello_card) 
+        #   task.update_with_card(trello_card)
         #   TrelloTask.update_last_sync(task, lastSync)
         # end
       end

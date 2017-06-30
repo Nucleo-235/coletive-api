@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby ENV['CUSTOM_RUBY_VERSION'] || '2.2.4'
+ruby '2.2.4'
 gem 'rails', '4.2.5'
 gem 'rails-api'
 gem 'rack-cors'
