@@ -28,4 +28,8 @@ class Task < ActiveRecord::Base
   validates_presence_of :project, :name
 
   has_many :task_labels, dependent: :destroy
+  has_many :task_members, dependent: :destroy
+
+  def participate(new_member_user)
+  end
 end

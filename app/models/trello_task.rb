@@ -102,6 +102,19 @@ class TrelloTask < Task
         existing_labels.each do |not_found_label_name|
           task.task_labels.where(label: Label.find_by(name: not_found_label_name)).destroy_all
         end
+
+        existing_member_ids = task.task_members.map { |e| e.id }
+        trello_card.member_ids.each do |trello_member_id|
+          trello_member_user = User.find_by(trello_member_id: trello_member_id)
+          if trello_member_user
+            trello_member = task.task_members.find_or_create_by(trello_member_id: trello_member_id, user: trello_member_user)
+            existing_member_ids.delete(trello_member.id) if existing_member_ids.include? trello_member.id
+          end
+        end
+
+        # remove labels que nao foram mais encontradas
+        task.task_members.where(id: existing_members).destroy_all
+
         TrelloTask.update_last_sync(task, lastSync)
       else
         task = project.tasks.find_by(type: TrelloTask.name, trello_card_id: trello_card.id)
@@ -121,6 +134,20 @@ class TrelloTask < Task
 
   def trello_card
     Trello::Card.from_response project.user.trello_client.get("/cards/#{trello_card_id}")
+  end
+
+  def participate(new_member_user)
+    if new_member_user.trello_member && new_member_user.trello_member_id
+        trello_members_ids = trello_card.member_ids
+      if !trello_members_ids.include? new_member_user.trello_member_id
+        response = project.user.trello_client.post("/cards/#{trello_card_id}/idMembers", { value: new_member_user.trello_member_id })
+        task_members.find_or_create_by(trello_member_id: new_member_user.trello_member_id, user: new_member_user)
+        # puts response
+      end
+      true
+    else
+      false
+    end
   end
 
   def check_to_update_card

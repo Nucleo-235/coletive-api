@@ -1,6 +1,6 @@
-class TasksController < ApplicationController
+class TasksController < ApiController
   skip_before_action :authenticate_user!, only: [:index]
-  before_action :set_task, only: [:show, :update, :destroy]
+  before_action :set_task, only: [:show, :update, :destroy, :participate]
 
   # GET /tasks
   # GET /tasks.json
@@ -26,6 +26,14 @@ class TasksController < ApplicationController
     else
       render json: @task.errors, status: :unprocessable_entity
     end
+  end
+
+  # POST /tasks/1/participate
+  # POST /tasks1/participate.json
+  def participate
+    @task.project.participate(current_user)
+    @task.participate(current_user)
+    render json: @task
   end
 
   # PATCH/PUT /tasks/1

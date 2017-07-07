@@ -25,7 +25,6 @@ class ProjectSerializer < ActiveModel::Serializer
   # has_one :info
 
   has_many :available_tasks, key: "tasks", serializer: TaskSerializer
-  has_many :members
 
   def info
     object.info if object.respond_to? :info
@@ -56,9 +55,5 @@ class ProjectSerializer < ActiveModel::Serializer
 
   def tasks_count
     get_tasks.length
-  end
-
-  def members
-    object.members.limit(10)
   end
 end

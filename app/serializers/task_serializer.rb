@@ -21,9 +21,14 @@
 #
 
 class TaskSerializer < ActiveModel::Serializer
-  attributes :id, :type, :name, :slug, :description, :due_date, :completed, :assigned
+  attributes :id, :type, :name, :slug, :description, :due_date, :completed, :assigned, :current_user_participating
 
   has_many :labels
+
+  def current_user_participating
+    user = scope
+    return user && self.object.task_members.where(user: user).count > 0
+  end
 
   def labels
     object.task_labels.map { |task_label| task_label.label  }

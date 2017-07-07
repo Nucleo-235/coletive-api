@@ -29,6 +29,7 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  last_synced_at         :datetime
+#  trello_member_id       :string
 #
 
 class FreeMindPerson < User

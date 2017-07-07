@@ -1,18 +1,16 @@
 # == Schema Information
 #
-# Table name: project_members
+# Table name: task_members
 #
 #  id               :integer          not null, primary key
-#  project_id       :integer
+#  task_id          :integer
 #  user_id          :integer
-#  type             :string
 #  trello_member_id :string
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #
 
-class ProjectMemberSerializer < ActiveModel::Serializer
-  attributes :id, :trello_member_id
-  has_one :project
-  has_one :user
+class TaskMember < ActiveRecord::Base
+  belongs_to :task
+  belongs_to :user
 end

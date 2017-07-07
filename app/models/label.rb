@@ -8,6 +8,7 @@
 #  updated_at       :datetime         not null
 #  color_rgb        :string
 #  border_color_rgb :string
+#  font_color_rgb   :string
 #
 
 class Label < ActiveRecord::Base

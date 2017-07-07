@@ -29,6 +29,7 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  last_synced_at         :datetime
+#  trello_member_id       :string
 #
 
 require 'trello'
@@ -41,7 +42,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
           :recoverable, :rememberable, :trackable,
           :confirmable, :omniauthable
-  
+
   has_many :identities, dependent: :destroy
   has_many :projects, dependent: :destroy
   has_many :tasks, through: :projects
@@ -95,6 +96,10 @@ class User < ActiveRecord::Base
   def trello_member
     if !defined? @trello_member
       @trello_member = trello_client.find(:member, :me)
+      if !trello_member_id || @trello_member.id != trello_member_id
+        self.trello_member_id = @trello_member.id
+        self.save
+      end
     end
     @trello_member
   end

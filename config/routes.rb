@@ -21,6 +21,10 @@ Rails.application.routes.draw do
         get :trello_lists, on: :collection
       end
 
+      resources :tasks, only: [] do
+        post :participate, on: :member
+      end
+
       resources :users do
         get 'update_image', on: :collection
       end
